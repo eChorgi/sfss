@@ -80,10 +80,11 @@ Widget _loginTip(BuildContext context){
     child: Sfss.button(
       text: '没有账号？去注册', 
       onPressed: () {
-      Navigator.pushNamed(
-        context,
-        "/register",
-      );},
+        Navigator.pushNamed(
+          context,
+          "/register",
+        );
+      },
       padding: const EdgeInsets.all(0),
       color: Colors.transparent,
       textStyle: const TextStyle(
