@@ -1,11 +1,11 @@
 export 'pages/login/pageLogin.dart';
-export 'pages/welcome/pageWelcome.dart';
+export 'pages/welcome/page_welcome.dart';
 export 'pages/register/pageRegister.dart';
 export 'pages/home/pagePome.dart';
 export 'pages/detail/pageDetail.dart';
 
 import 'pages/login/pageLogin.dart';
-import 'pages/welcome/pageWelcome.dart';
+import 'pages/welcome/page_welcome.dart';
 import 'pages/register/pageRegister.dart';
 import 'pages/home/pagePome.dart';
 import 'pages/detail/pageDetail.dart';
