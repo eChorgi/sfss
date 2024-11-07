@@ -4,6 +4,16 @@ import 'package:sfss/styles/mainStyle.dart';
 
 
 class SfssWidget{
+  static Widget text(String content, {Color ?color, double ?fontSize, String? fontFamily, TextAlign ?textAlign, TextOverflow ?overflow, int ?maxLines, TextDecoration ?decoration}) {
+    return Text(
+      content,
+      style: TextStyle(
+        color: color ?? SfssStyle.mainGrey,
+        fontSize: fontSize ?? pxh(20),
+        fontFamily: fontFamily ?? SfssStyle.mainFont,
+      ),
+    );
+  }
   static Widget button({ required String text, Decoration ?decoration, double ?fontSize, TextStyle ? textStyle, EdgeInsetsGeometry ?padding, Color ?color, Color ?borderColor, double ? borderWidth, CupertinoDynamicColor ?disabledColor, double ?minSize, double ?pressedOpacity, BorderRadius ?borderRadius, Alignment ?alignment, Color ?focusColor, FocusNode ?focusNode, void Function(bool) ?onFocusChange, bool ?autofocus,  required void Function()? onPressed}) {
     return _button(decoration:decoration, padding:padding, color: color ?? const Color(0xFF791414), borderColor: borderColor, borderWidth: borderWidth, disabledColor:disabledColor, minSize:minSize, pressedOpacity:pressedOpacity, borderRadius:borderRadius, alignment:alignment, focusColor:focusColor, focusNode:focusNode, onFocusChange:onFocusChange, autofocus:autofocus,  onPressed: onPressed,
       child: Text(

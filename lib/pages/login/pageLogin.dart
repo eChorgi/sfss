@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sfss/plugins/adapt.dart';
 import 'package:sfss/styles/mainStyle.dart';
-import 'package:sfss/widgets.dart';
+import 'package:sfss/widgets/sfssWidget.dart';
 
 
 Widget _loginButton(BuildContext context) {
