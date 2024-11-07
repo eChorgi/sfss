@@ -1,5 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:sfss/plugins/adapt.dart';
+import 'package:sfss/styles/mainStyle.dart';
+import 'package:sfss/widgets/sfssWidget.dart';
 
 class SfssTabBar extends CupertinoTabBar {
   final double itemSpacing;
@@ -8,7 +11,7 @@ class SfssTabBar extends CupertinoTabBar {
     Key? key,
     required List<BottomNavigationBarItem> items,
     required int currentIndex,
-    this.itemSpacing = 30,
+    this.itemSpacing = 0,
     ValueChanged<int>? onTap,
     Border ?border,
     Color backgroundColor = Colors.white,
@@ -23,39 +26,69 @@ class SfssTabBar extends CupertinoTabBar {
   
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 82,
+    return Container(
+      width: double.infinity,
+      height: 70,
+      color: Colors.white,
       child: Container(
         color: backgroundColor,
         child: Column(
           children: [
             Container(
               height: 1,
-              width: 350,
-              decoration: const BoxDecoration(
-                color: Color(0xFFC4C6CB),
-                borderRadius: BorderRadius.all(Radius.circular(4)),
-              ),
+              width: px(312),
+              color: const Color(0xFFC4C6CB),
             ),
-            const SizedBox(height: 24),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: items.map((item) {
-                int index = items.indexOf(item);
-                bool isSelected = index == currentIndex;
-                return GestureDetector(
+            const SizedBox(height: 13),
+            SizedBox(
+              width: px(287),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: items.map((item) {
+                  int index = items.indexOf(item);
+                  bool isSelected = index == currentIndex;
+                  return GestureDetector(
+                    onTap: () {
+                      if (onTap != null) {
+                        onTap!(index);
+                      }
+                    },
+                    child: Padding(
+                      padding: EdgeInsets.only(left: itemSpacing / 2, right: itemSpacing / 2),
+                        child: isSelected?item.activeIcon:item.icon
+                    ),
+                  );
+                  //在中间插入
+                }).toList()..insert(items.length~/2,
+                 GestureDetector(
                   onTap: () {
-                    if (onTap != null) {
-                      onTap!(index);
-                    }
+                    Navigator.of(context).pushNamed('/record'); 
                   },
-                  child: Padding(
-                    padding: EdgeInsets.only(left: itemSpacing / 2, right: itemSpacing / 2),
-                      child: isSelected?item.activeIcon:item.icon
+                  child: Hero(
+                    tag: 'loginButtonToRecordButton',
+                    child: Transform(
+                      transform: Matrix4.translationValues(3.6, 0, 0),
+                      child: Container(
+                      width: 40,
+                      height: 40,
+                      decoration: BoxDecoration (
+                        color: SfssStyle.mainRed,
+                        borderRadius: BorderRadius.circular(40)
+                      ),
+                      child: 
+                        Center(
+                          child: SfssWidget.text(
+                            '记',
+                            fontSize: 15,
+                            color: Colors.white
+                          ),
+                        )
+                      ),
+                    ),
                   ),
-                );
-              }).toList(),
+                 )
+                )
+              ),
             ),
           ],
         ),

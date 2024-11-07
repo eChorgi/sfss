@@ -74,7 +74,6 @@ double px(number, {double? min, double? max, double? minScale, double? maxScale}
   else if(maxScale != null) {
     res = res > maxScale * number ? maxScale * number : res;
   }
-  print(res);
   return res;
 }
 
@@ -97,6 +96,6 @@ double pxh(number, {double? min, double? max, double? minScale, double? maxScale
 }
 
 double pxmin(number, {double? min, double? max, double? minScale, double? maxScale, double wscale = 1, double hscale = 1}) {
-  var minOf = (n1, n2) => n1 < n2 ? n1 : n2;
+  minOf(n1, n2) => n1 < n2 ? n1 : n2;
   return minOf(wscale*px(number, min: min, max: max, minScale: minScale, maxScale: maxScale), hscale*pxh(number, min: min, max: max, minScale: minScale, maxScale: maxScale));
 }
