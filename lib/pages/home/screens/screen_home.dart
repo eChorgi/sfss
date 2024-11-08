@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:sfss/pages/home/wigets/diet_progress.dart';
-import 'package:sfss/plugins/adapt.dart';
-import 'package:sfss/widgets/sfssWidget.dart';
+import 'package:sfss/plugins/adapter.dart';
+import 'package:sfss/widgets/sfss_widget.dart';
 
 class ScreenHome extends StatefulWidget {
   const ScreenHome({ Key? key }) : super(key: key);
@@ -78,23 +78,27 @@ class _ScreenHomeState extends State<ScreenHome> with TickerProviderStateMixin {
               topRight: Radius.circular(22),
             ),
           ),
-          child: ListView(
-            children: [
-              Column(
-                children: [
-                  SizedBox(height: pxh(22, extraWScale: 0.15, maxScale: 1.2)),
-                  SfssWidget.text(
-                    '早上好，来一顿热腾腾的饭菜开启今天',
-                    fontSize: pxfit(14, extraWScale: 0.1, maxScale: 1.2)
-                  ),
-                  SizedBox(height: pxh(15, extraWScale: 0.3, maxScale: 1.2)),
-                  DietProgress(
-                    width: px(304),
-                    height: pxfit(168),
-                  ),
-                ],
-              ),
-            ],
+          child: MediaQuery.removePadding(
+            context: context,
+            removeTop: true, //去除顶部的空白
+            child: ListView(
+              children: [
+                Column(
+                  children: [
+                    SizedBox(height: pxh(22, extraWScale: 0.15, maxScale: 1.2)),
+                    SfssWidget.text(
+                      '早上好，来一顿热腾腾的饭菜开启今天',
+                      fontSize: pxfit(14, extraWScale: 0.1, maxScale: 1.2)
+                    ),
+                    SizedBox(height: pxh(15, extraWScale: 0.3, maxScale: 1.2)),
+                    DietProgress(
+                      width: px(304),
+                      height: pxfit(168),
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -134,7 +138,7 @@ class _ScreenHomeState extends State<ScreenHome> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    Adapt(context: context);
+    Adapter(context: context);
     return CupertinoPageScaffold(
       child: AnimatedBuilder(
         animation: animController,

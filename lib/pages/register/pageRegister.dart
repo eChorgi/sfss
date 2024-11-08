@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:sfss/styles/mainStyle.dart';
-import 'package:sfss/widgets/sfssWidget.dart';
+import 'package:sfss/styles/sfss_style.dart';
+import 'package:sfss/widgets/sfss_widget.dart';
 
 
 

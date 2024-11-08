@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:sfss/styles/mainStyle.dart';
+import 'package:sfss/styles/sfss_style.dart';
 
 class historyPreview extends StatefulWidget {
 

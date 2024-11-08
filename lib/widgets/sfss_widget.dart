@@ -1,9 +1,40 @@
+import 'dart:math';
+
 import 'package:flutter/cupertino.dart';
-import 'package:sfss/plugins/adapt.dart';
-import 'package:sfss/styles/sfssStyle.dart';
+import 'package:sfss/plugins/adapter.dart';
+import 'package:sfss/styles/sfss_style.dart';
 
 
 class SfssWidget{
+  static Widget assetImage(String name) {
+    return LayoutBuilder(
+      builder: (context, boxConstraints){
+        Image image = Image.asset(
+          name,
+          fit: BoxFit.fitWidth,
+          width: double.infinity,
+        );
+        double ?imgW, imgH;
+        image.image
+          .resolve(new ImageConfiguration())
+          .addListener(
+            new ImageStreamListener(
+            (ImageInfo info, bool _) {
+              imgW = info.image.width.toDouble();
+              imgH = info.image.height.toDouble();
+            })
+          );
+        var displayH = imgH!*boxConstraints.maxWidth/imgW!;
+        return Image.asset(
+          name,
+          fit: BoxFit.fitWidth,
+          width: double.infinity,
+          height: max(100, min(200, displayH)),
+        );
+      }
+    );
+  }
+
   static Widget text(String content, {Color ?color, double ?fontSize, String? fontFamily, TextAlign ?textAlign, TextOverflow ?overflow, int ?maxLines, TextDecoration ?decoration}) {
     return Text(
       content,
@@ -12,6 +43,8 @@ class SfssWidget{
         fontSize: fontSize ?? pxh(20),
         fontFamily: fontFamily ?? SfssStyle.mainFont,
       ),
+      maxLines: maxLines,
+      overflow: overflow,
     );
   }
   static Widget button({ required String text, Decoration ?decoration, double ?fontSize, TextStyle ? textStyle, EdgeInsetsGeometry ?padding, Color ?color, Color ?borderColor, double ? borderWidth, CupertinoDynamicColor ?disabledColor, double ?minSize, double ?pressedOpacity, BorderRadius ?borderRadius, Alignment ?alignment, Color ?focusColor, FocusNode ?focusNode, void Function(bool) ?onFocusChange, bool ?autofocus,  required void Function()? onPressed}) {

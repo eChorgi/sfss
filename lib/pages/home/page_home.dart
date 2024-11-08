@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:sfss/pages/home/subPages/screen_home.dart';
+import 'package:sfss/pages/home/screens/community/screen_community.dart';
+import 'package:sfss/pages/home/screens/screen_home.dart';
 import 'package:sfss/pages/home/wigets/diet_progress.dart';
-import 'package:sfss/plugins/adapt.dart';
-import 'package:sfss/styles/mainStyle.dart';
-import 'package:sfss/widgets/sfssWidget.dart';
+import 'package:sfss/plugins/adapter.dart';
+import 'package:sfss/styles/sfss_style.dart';
+import 'package:sfss/widgets/sfss_widget.dart';
 import 'package:sfss/widgets/tabBar.dart';
 
 class PageHome extends StatefulWidget {
@@ -19,7 +20,7 @@ class _PageHomeState extends State<PageHome> with TickerProviderStateMixin {
   
   @override
   Widget build(BuildContext context) {
-    Adapt(context: context);
+    Adapter(context: context);
     return CupertinoTabScaffold(
       tabBar: SfssTabBar(
         border: Border(
@@ -41,7 +42,7 @@ class _PageHomeState extends State<PageHome> with TickerProviderStateMixin {
         return const [
           ScreenHome(),
           ScreenHome(),
-          ScreenHome(),
+          ScreenCommunity(),
           ScreenHome(),
         ][index];
       }

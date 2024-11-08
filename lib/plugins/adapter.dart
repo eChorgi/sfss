@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'dart:math';
 
-class Adapt {
+class Adapter {
     late double _width;
     late double _height;
     late double _topbarH;
     late double _botbarH;
     late double _pixelRatio;
-    static Adapt? adapt;
+    static Adapter? adapter;
     static int? _uiwidth;
     static int? _uiheight;
     static const int UI_HEIGHT = 844;
     static const int UI_WIDTH = 390;
-    Adapt({required BuildContext context, uiwidth = UI_WIDTH, uiheight = UI_HEIGHT}) {
+    Adapter({required BuildContext context, uiwidth = UI_WIDTH, uiheight = UI_HEIGHT}) {
       MediaQueryData mediaQuery = MediaQuery.of(context);
       _width = mediaQuery.size.width;
       _height = mediaQuery.size.height;
@@ -21,7 +21,7 @@ class Adapt {
       _pixelRatio = mediaQuery.devicePixelRatio;
       _uiwidth = uiwidth;
       _uiheight = uiheight;
-      adapt = this;
+      adapter = this;
     }
     var _ratio;
     var _ratioH;
@@ -30,18 +30,18 @@ class Adapt {
         _ratioH = _height / uiheight;
     }
     static px(number){
-      if(adapt == null) {
+      if(adapter == null) {
         return 0;
       }
-      if(adapt?._ratio == null){adapt?.init(_uiwidth!, _uiheight!);}
-      return number * adapt?._ratio;
+      if(adapter?._ratio == null){adapter?.init(_uiwidth!, _uiheight!);}
+      return number * adapter?._ratio;
     }
     static pxH(number){
-      if(adapt == null) {
+      if(adapter == null) {
         return 0;
       }
-      if(adapt?._ratio == null){adapt?.init(_uiwidth!, _uiheight!);}
-      return number * adapt?._ratioH;
+      if(adapter?._ratio == null){adapter?.init(_uiwidth!, _uiheight!);}
+      return number * adapter?._ratioH;
     }
     onepx(){
         return 1/_pixelRatio;
@@ -62,7 +62,7 @@ class Adapt {
 
 double px(number, {double noLimitExtraWScale = 0, double noLimitExtraHScale = 0,double extraWScale = 0, double extraHScale = 0, double? min, double? max, double? minScale, double? maxScale}) {
   maxOf(double n1, double n2) => n1 > n2 ? n1 : n2;
-  double res = Adapt.px(number);
+  double res = Adapter.px(number);
   if(extraHScale != 0) {
     res = res + pxh(extraHScale * number)-extraHScale * number;
   }
@@ -93,7 +93,7 @@ double px(number, {double noLimitExtraWScale = 0, double noLimitExtraHScale = 0,
 
 double pxh(number, {double noLimitExtraWScale = 0, double noLimitExtraHScale = 0, double extraWScale = 0, double extraHScale = 0, double? min, double? max, double? minScale, double? maxScale}) {
   maxOf(double n1, double n2) => n1 > n2 ? n1 : n2;
-  double res = Adapt.pxH(number);
+  double res = Adapter.pxH(number);
   if(extraHScale != 0) {
     res = res + pxh(extraHScale * number)-extraHScale * number;
   }

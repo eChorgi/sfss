@@ -5,9 +5,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:lottie/lottie.dart';
-import 'package:sfss/plugins/adapt.dart';
-import 'package:sfss/styles/sfssStyle.dart';
-import 'package:sfss/widgets/sfssWidget.dart';
+import 'package:sfss/plugins/adapter.dart';
+import 'package:sfss/styles/sfss_style.dart';
+import 'package:sfss/widgets/sfss_widget.dart';
 
 class PageWelcomeLogin extends StatefulWidget {
   const PageWelcomeLogin({super.key});
@@ -245,7 +245,7 @@ class _PageWelcomeLoginState extends State<PageWelcomeLogin> with TickerProvider
     return Opacity(
       opacity: slideOpacities[index].value,
       child: Transform(
-        transform: Matrix4.translationValues(Adapt.adapt?.screenW() * (1-slideLefts[index].value), 0,0),
+        transform: Matrix4.translationValues(Adapter.adapter?.screenW() * (1-slideLefts[index].value), 0,0),
         child: child,
       ),
     );
@@ -579,7 +579,7 @@ class _PageWelcomeLoginState extends State<PageWelcomeLogin> with TickerProvider
   }
   @override
   Widget build(BuildContext context) {
-    Adapt(context: context);
+    Adapter(context: context);
     return CupertinoPageScaffold(
       child: AnimatedBuilder(
         animation: animController1,

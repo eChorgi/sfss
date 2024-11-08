@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:sfss/styles/mainStyle.dart';
+import 'package:sfss/styles/sfss_style.dart';
 
 class CollectionHeaderDelegate extends SliverPersistentHeaderDelegate{
   final double maxExtent;
