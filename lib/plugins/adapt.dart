@@ -60,8 +60,15 @@ class Adapt {
     }
 }
 
-double px(number, {double? min, double? max, double? minScale, double? maxScale}) {
+double px(number, {double noLimitExtraWScale = 0, double noLimitExtraHScale = 0,double extraWScale = 0, double extraHScale = 0, double? min, double? max, double? minScale, double? maxScale}) {
+  maxOf(double n1, double n2) => n1 > n2 ? n1 : n2;
   double res = Adapt.px(number);
+  if(extraHScale != 0) {
+    res = res + pxh(extraHScale * number)-extraHScale * number;
+  }
+  if(extraWScale != 0) {
+    res = res + px(extraWScale * number)-extraWScale * number;
+  }
   if(min != null) {
     res = res < min ? min : res;
   }
@@ -74,12 +81,25 @@ double px(number, {double? min, double? max, double? minScale, double? maxScale}
   else if(maxScale != null) {
     res = res > maxScale * number ? maxScale * number : res;
   }
+  if(noLimitExtraHScale != 0) {
+    res = res + pxh(noLimitExtraHScale * number)-noLimitExtraHScale * number;
+  }
+  if(noLimitExtraWScale != 0) {
+    res = res + px(noLimitExtraWScale * number)-noLimitExtraWScale * number;
+  }
   return res;
 }
 
 
-double pxh(number, {double? min, double? max, double? minScale, double? maxScale}) {
+double pxh(number, {double noLimitExtraWScale = 0, double noLimitExtraHScale = 0, double extraWScale = 0, double extraHScale = 0, double? min, double? max, double? minScale, double? maxScale}) {
+  maxOf(double n1, double n2) => n1 > n2 ? n1 : n2;
   double res = Adapt.pxH(number);
+  if(extraHScale != 0) {
+    res = res + pxh(extraHScale * number)-extraHScale * number;
+  }
+  if(extraWScale != 0) {
+    res = res + px(extraWScale * number)-extraWScale * number;
+  }
   if(min != null) {
     res = res < min ? min : res;
   }
@@ -92,10 +112,35 @@ double pxh(number, {double? min, double? max, double? minScale, double? maxScale
   else if(maxScale != null) {
     res = res > maxScale * number ? maxScale * number : res;
   }
+  if(noLimitExtraHScale != 0) {
+    res = res + pxh(noLimitExtraHScale * number)-noLimitExtraHScale * number;
+  }
+  if(noLimitExtraWScale != 0) {
+    res = res + px(noLimitExtraWScale * number)-noLimitExtraWScale * number;
+  }
   return res;
 }
 
-double pxmin(number, {double? min, double? max, double? minScale, double? maxScale, double wscale = 1, double hscale = 1}) {
-  minOf(n1, n2) => n1 < n2 ? n1 : n2;
-  return minOf(wscale*px(number, min: min, max: max, minScale: minScale, maxScale: maxScale), hscale*pxh(number, min: min, max: max, minScale: minScale, maxScale: maxScale));
+double pxfit(number, {double noLimitExtraWScale = 0, double noLimitExtraHScale = 0, double extraWScale = 0, double extraHScale = 0, double? min, double? max, double? minScale, double? maxScale, double wscale = 1, double hscale = 1}) {
+  minOf(double n1, double n2) => n1 < n2 ? n1 : n2;
+  var res = pxh(extraHScale * number) + px(extraWScale * number) + minOf(wscale*px(number, min: min, max: max, minScale: minScale, maxScale: maxScale), hscale*pxh(number, min: min, max: max, minScale: minScale, maxScale: maxScale));
+  if(min != null) {
+    res = res < min ? min : res;
+  }
+  else if(minScale != null) {
+    res = res < minScale * number ? minScale * number : res;
+  }
+  if(max != null) {
+    res = res > max ? max : res;
+  }
+  else if(maxScale != null) {
+    res = res > maxScale * number ? maxScale * number : res;
+  }
+  if(noLimitExtraHScale != 0) {
+    res = res + pxh(noLimitExtraHScale * number)-noLimitExtraHScale * number;
+  }
+  if(noLimitExtraWScale != 0) {
+    res = res + px(noLimitExtraWScale * number)-noLimitExtraWScale * number;
+  }
+  return res;
 }

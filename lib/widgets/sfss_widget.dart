@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:sfss/plugins/adapt.dart';
-import 'package:sfss/styles/mainStyle.dart';
+import 'package:sfss/styles/sfssStyle.dart';
 
 
 class SfssWidget{
@@ -24,6 +24,78 @@ class SfssWidget{
           fontSize: fontSize??px(20),
         ),
       ),
+    );
+  }
+  static BottomNavigationBarItem tabBarItem(String text) {
+    return BottomNavigationBarItem(
+      icon: Row(
+        children: [
+          const SizedBox(
+            height: 14,
+            width: 9.5,
+          ),
+          Text(
+            text,
+            style: TextStyle(
+              color: const Color(0xFF4A5568),
+              fontSize: 14.5,
+              fontFamily: SfssStyle.mainFont,
+            ),
+          ),
+        ],
+      ),
+      activeIcon: Row(
+        children: [
+          Container(
+            height: 14,
+            width: 7.5,
+            decoration: BoxDecoration(
+              color: SfssStyle.mainRed,
+              borderRadius: const BorderRadius.all(Radius.circular(2))
+            ),
+          ),
+          const SizedBox(
+            width: 2,
+          ),
+          Text(
+            text,
+            style: TextStyle(
+              color: SfssStyle.mainRed,
+              fontSize: 14.5,
+              fontFamily: SfssStyle.mainFont,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+  static Widget card({double ?height, double ?width, bool ?isFrosted, Widget ?child}) {
+    return Container(
+      height: height,
+      width: width,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(pxfit(10)),
+        image: (isFrosted ?? true) ? const DecorationImage(
+          image: AssetImage("assets/images/home/frosted_spots.jpg"),
+          scale: 0.7,
+          repeat: ImageRepeat.repeat,
+        ):null,
+        gradient: const RadialGradient(
+          center: Alignment(-0.77, 0.52),
+          radius: 1.76,
+          colors: [
+            Color(0xFF7A1515),
+            Color(0xFF934141),
+            Color(0xFF9D5353)
+          ],
+        ),
+        border: Border.all(
+          color: const Color(0x2BFFFFFF),
+          width: pxfit(0.86),
+          strokeAlign: BorderSide.strokeAlignInside
+        ),
+      ),
+      child: child,
     );
   }
 

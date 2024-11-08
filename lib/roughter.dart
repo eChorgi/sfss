@@ -7,7 +7,7 @@ export 'pages/detail/pageDetail.dart';
 import 'pages/login/pageLogin.dart';
 import 'pages/welcome/page_welcome_login.dart';
 import 'pages/register/pageRegister.dart';
-import 'pages/home/pagePome.dart';
+import 'pages/home/page_home.dart';
 import 'pages/detail/pageDetail.dart';
 
 import 'package:flutter/material.dart';

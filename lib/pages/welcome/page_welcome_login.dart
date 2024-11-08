@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:lottie/lottie.dart';
 import 'package:sfss/plugins/adapt.dart';
-import 'package:sfss/styles/mainStyle.dart';
+import 'package:sfss/styles/sfssStyle.dart';
 import 'package:sfss/widgets/sfssWidget.dart';
 
 class PageWelcomeLogin extends StatefulWidget {
@@ -133,7 +133,7 @@ class _PageWelcomeLoginState extends State<PageWelcomeLogin> with TickerProvider
             style: TextStyle(
               color: Colors.white,
               fontFamily: SfssStyle.mainFont,
-              fontSize: pxmin(36, maxScale: 2.0, hscale: 2),
+              fontSize: pxfit(36, maxScale: 2.0, hscale: 2),
             ),
           ),
         ),
@@ -145,7 +145,7 @@ class _PageWelcomeLoginState extends State<PageWelcomeLogin> with TickerProvider
             style: TextStyle(
               color: Colors.white,
               fontFamily: SfssStyle.mainFont,
-              fontSize: pxmin(14, maxScale: 2.0, hscale: 2),
+              fontSize: pxfit(14, maxScale: 2.0, hscale: 2),
               letterSpacing: px(9, maxScale: 2.0)
             ),
           ),
@@ -158,11 +158,11 @@ class _PageWelcomeLoginState extends State<PageWelcomeLogin> with TickerProvider
       opacity: opacities[2].value,
       child: Center(
         child: SizedBox(
-          width: pxmin(269, maxScale: 1.4, hscale: 2),
-          height: pxmin(51, maxScale: 1.4, hscale: 2),
+          width: pxfit(269, maxScale: 1.4, hscale: 2),
+          height: pxfit(51, maxScale: 1.4, hscale: 2),
           child: SfssWidget.button(
             text: "微信登录",
-            fontSize: pxmin(20, maxScale: 1.5, hscale: 2),
+            fontSize: pxfit(20, maxScale: 1.5, hscale: 2),
             onPressed: (){
               animController1.forward();
             // Navigator.pushNamed(context, '/login');
@@ -181,7 +181,7 @@ class _PageWelcomeLoginState extends State<PageWelcomeLogin> with TickerProvider
           child: SfssWidget.button(
             color: Colors.transparent,
             text: "手机号注册 / 登录",
-            fontSize: pxmin(14, maxScale: 1.5, hscale: 2),
+            fontSize: pxfit(14, maxScale: 1.5, hscale: 2),
             onPressed: (){
             // Navigator.pushNamed(context, '/login');
             animController1.forward();
@@ -291,7 +291,7 @@ class _PageWelcomeLoginState extends State<PageWelcomeLogin> with TickerProvider
                             const SizedBox(width: 5),
                             SfssWidget.text(
                               '欢迎来到四方食事',
-                              fontSize: pxmin(19)
+                              fontSize: pxfit(19)
                             ),
                           ],
                         ),
@@ -312,7 +312,7 @@ class _PageWelcomeLoginState extends State<PageWelcomeLogin> with TickerProvider
                           index: 6,
                           child: SfssWidget.text(
                             '登录',
-                            fontSize: pxmin(36),
+                            fontSize: pxfit(36),
                           ),
                         ),
                         SizedBox(height: pxh(43),),
@@ -340,12 +340,12 @@ class _PageWelcomeLoginState extends State<PageWelcomeLogin> with TickerProvider
                               placeholderStyle: TextStyle(
                                 color: const Color(0xFFA4AAB3),
                                 fontFamily: SfssStyle.mainFont,
-                                fontSize: pxmin(14),
+                                fontSize: pxfit(14),
                               ),
                               style: TextStyle(
                                 color: SfssStyle.mainGrey,
                                 fontFamily: SfssStyle.mainFont,
-                                fontSize: pxmin(14),
+                                fontSize: pxfit(14),
                                 letterSpacing: px(0.5)
                               ),
                               padding: EdgeInsets.only(left: px(26, maxScale: 1.2)),
@@ -385,12 +385,12 @@ class _PageWelcomeLoginState extends State<PageWelcomeLogin> with TickerProvider
                                     placeholderStyle: TextStyle(
                                       color: const Color(0xFFA4AAB3),
                                       fontFamily: SfssStyle.mainFont,
-                                      fontSize: pxmin(14),
+                                      fontSize: pxfit(14),
                                     ),
                                     style: TextStyle(
                                       color: SfssStyle.mainGrey,
                                       fontFamily: SfssStyle.mainFont,
-                                      fontSize: pxmin(14),
+                                      fontSize: pxfit(14),
                                       letterSpacing: px(0.5)
                                     ),
                                     padding: EdgeInsets.only(left: px(26, maxScale: 1.2)),
@@ -409,7 +409,7 @@ class _PageWelcomeLoginState extends State<PageWelcomeLogin> with TickerProvider
                                   child: Center(
                                     child: SfssWidget.text(
                                       '获取验证码',
-                                      fontSize: pxmin(14),
+                                      fontSize: pxfit(14),
                                       color: Color(0xFF858A92),
                                     ),
                                   ),
@@ -427,12 +427,16 @@ class _PageWelcomeLoginState extends State<PageWelcomeLogin> with TickerProvider
                             height: pxh(37),
                             child: SfssWidget.button(
                               text: '登录',
-                              fontSize: pxmin(15),
+                              fontSize: pxfit(15),
                               borderRadius: BorderRadius.circular(pxh(10)),
                               onPressed: (){
                                 animController2.forward();
                                 Future.delayed(Duration(seconds: 2), () {
-                                  animController2.reverse();
+                                  animController2.animateTo(0.18).then((value) {;
+                                    if(mounted){
+                                      Navigator.pushNamed(context, '/home');
+                                    }
+                                  });
                                 });
                                 // Navigator.pushNamed(context, '/home');
                               },
@@ -445,7 +449,7 @@ class _PageWelcomeLoginState extends State<PageWelcomeLogin> with TickerProvider
                           index: 2,
                           child: SfssWidget.text(
                             '去逛逛',
-                            fontSize: pxmin(12),
+                            fontSize: pxfit(12),
                             color: const Color(0xFFA0A2A8)
                           ),
                         ),
@@ -464,7 +468,7 @@ class _PageWelcomeLoginState extends State<PageWelcomeLogin> with TickerProvider
                               const SizedBox(width: 9),
                               SfssWidget.text(
                                 '其他登录方式',
-                                fontSize: pxmin(12),
+                                fontSize: pxfit(12),
                                 color: const Color(0xFFA0A2A8)
                               ),
                               const SizedBox(width: 9),
@@ -509,8 +513,8 @@ class _PageWelcomeLoginState extends State<PageWelcomeLogin> with TickerProvider
                         child: Transform.scale(
                           scale: 1-loadingScale.value,
                           child:  SizedBox(
-                            width: pxmin(140),
-                            height: pxmin(140),
+                            width: pxfit(140),
+                            height: pxfit(140),
                             child: Lottie.asset('assets/images/loadingSfss.json', fit: BoxFit.cover),
                           ),
                         )
@@ -530,11 +534,11 @@ class _PageWelcomeLoginState extends State<PageWelcomeLogin> with TickerProvider
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           wxLoginButton(),
-          SizedBox(height: pxmin(9)-px(1)),
+          SizedBox(height: pxfit(9)-px(1)),
           mobileLoginButton(),
-          SizedBox(height: pxmin(179)-px(10)),
+          SizedBox(height: pxfit(179)-px(10)),
           privacyPolicy(),
-          SizedBox(height: pxmin(19)-px(1))
+          SizedBox(height: pxfit(19)-px(1))
         ],
       ),
     );
@@ -576,7 +580,6 @@ class _PageWelcomeLoginState extends State<PageWelcomeLogin> with TickerProvider
   @override
   Widget build(BuildContext context) {
     Adapt(context: context);
-    
     return CupertinoPageScaffold(
       child: AnimatedBuilder(
         animation: animController1,
