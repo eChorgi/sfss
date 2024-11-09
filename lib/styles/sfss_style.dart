@@ -13,5 +13,5 @@ class SfssStyle{
   const Color(0xFFD3D3D3),
   const Color(0xFF8BA97B),
   const Color(0xFFDA9F61),
-];
+  ];
 }

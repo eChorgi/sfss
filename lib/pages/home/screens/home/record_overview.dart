@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:sfss/pages/home/wigets/adaptive_widget.dart';
+import 'package:sfss/widgets/adaptive_widget.dart';
 import 'package:sfss/plugins/widget_adapter.dart';
 import 'package:sfss/widgets/heatmap_calendar.dart';
 import 'package:sfss/widgets/sfss_widget.dart';

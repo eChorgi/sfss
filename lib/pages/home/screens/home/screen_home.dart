@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:sfss/pages/home/screens/community/user_post_card.dart';
 import 'package:sfss/pages/home/screens/home/record_overview.dart';
-import 'package:sfss/pages/home/wigets/diet_progress.dart';
+import 'package:sfss/pages/home/screens/home/diet_progress.dart';
 import 'package:sfss/plugins/adapter.dart';
 import 'package:sfss/widgets/heatmap_calendar.dart';
 import 'package:sfss/widgets/sfss_widget.dart';
@@ -106,10 +106,11 @@ class _ScreenHomeState extends State<ScreenHome> with TickerProviderStateMixin {
                       child: SizedBox(
                         width: px(305),
                         height: px(216),
-                        child: RecordOverview()
+                        child: const RecordOverview()
                       ),
                     ),
-                    SizedBox(height: 100),
+                    SizedBox(height: pxh(26)),
+                    
                   ],
                 ),
               ],

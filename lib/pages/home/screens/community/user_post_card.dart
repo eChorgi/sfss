@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:sfss/pages/home/wigets/adaptive_widget.dart';
+import 'package:sfss/widgets/adaptive_widget.dart';
 import 'package:sfss/styles/sfss_style.dart';
 import 'package:sfss/widgets/fit_width_image.dart';
 import 'package:sfss/widgets/sfss_widget.dart';
