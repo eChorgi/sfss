@@ -33,8 +33,8 @@ class WidgetAdapter {
     var _ratio;
     var _ratioH;
     init(double uiwidth, double uiheight){
-        _ratio = _scaleW * _width / uiwidth;
-        _ratioH = _scaleH * _height / uiheight;
+        _ratio = _scaleW * _width / UI_WIDTH;
+        _ratioH = _scaleH * _height / UI_HEIGHT;
     }
     pxW(number){
       if(_ratio == null){init(_uiwidth!, _uiheight!);}
@@ -139,3 +139,14 @@ class WidgetAdapter {
     return res;
   }
 }
+typedef PxFunction = double Function(
+  dynamic number, {
+  double noLimitExtraWScale,
+  double noLimitExtraHScale,
+  double extraWScale,
+  double extraHScale,
+  double? min,
+  double? max,
+  double? minScale,
+  double? maxScale,
+});

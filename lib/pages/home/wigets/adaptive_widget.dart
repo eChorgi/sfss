@@ -27,7 +27,7 @@ class AdaptiveWidgetState extends State<AdaptiveWidget> {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraints) {
-        adapter ??= WidgetAdapter(boxConstraints: constraints, widgetUiWidth: widget.uiWidth, widgetUiHeight: widget.uiHeight);
+        adapter = WidgetAdapter(boxConstraints: constraints, widgetUiWidth: widget.uiWidth, widgetUiHeight: widget.uiHeight);
         return widget.builder(context, adapter!);
       });
   }

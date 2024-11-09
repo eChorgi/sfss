@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:sfss/pages/home/screens/community/user_post_card.dart';
+import 'package:sfss/pages/home/screens/home/record_overview.dart';
 import 'package:sfss/pages/home/wigets/diet_progress.dart';
 import 'package:sfss/plugins/adapter.dart';
+import 'package:sfss/widgets/heatmap_calendar.dart';
 import 'package:sfss/widgets/sfss_widget.dart';
 
 class ScreenHome extends StatefulWidget {
@@ -98,6 +101,15 @@ class _ScreenHomeState extends State<ScreenHome> with TickerProviderStateMixin {
                       width: px(304),
                       height: pxfit(168),
                     ),
+                    SizedBox(height: pxh(20)),
+                    Center(
+                      child: SizedBox(
+                        width: px(305),
+                        height: px(216),
+                        child: RecordOverview()
+                      ),
+                    ),
+                    SizedBox(height: 100),
                   ],
                 ),
               ],
