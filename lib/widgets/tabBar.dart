@@ -6,7 +6,7 @@ import 'package:sfss/widgets/sfss_widget.dart';
 
 class SfssTabBar extends CupertinoTabBar {
   final double itemSpacing;
-
+  final double height = 0;
   SfssTabBar({
     Key? key,
     required List<BottomNavigationBarItem> items,
@@ -26,46 +26,46 @@ class SfssTabBar extends CupertinoTabBar {
   
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      height: 70,
-      color: Colors.white,
+    return Hero(
+      tag: "tabBar",
       child: Container(
-        color: backgroundColor,
-        child: Column(
-          children: [
-            Container(
-              height: 1,
-              width: px(312),
-              color: const Color(0xFFC4C6CB),
-            ),
-            const SizedBox(height: 13),
-            SizedBox(
-              width: px(287),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: items.map((item) {
-                  int index = items.indexOf(item);
-                  bool isSelected = index == currentIndex;
-                  return GestureDetector(
+        width: double.infinity,
+        height: 70,
+        color: Colors.white,
+        child: Container(
+          color: backgroundColor,
+          child: Column(
+            children: [
+              Container(
+                height: 1,
+                width: px(312),
+                color: const Color(0xFFC4C6CB),
+              ),
+              const SizedBox(height: 13),
+              SizedBox(
+                width: px(287),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: items.map((item) {
+                    int index = items.indexOf(item);
+                    bool isSelected = index == currentIndex;
+                    return GestureDetector(
+                      onTap: () {
+                        if (onTap != null) {
+                          onTap!(index);
+                        }
+                      },
+                      child: Padding(
+                        padding: EdgeInsets.only(left: itemSpacing / 2, right: itemSpacing / 2),
+                          child: isSelected?item.activeIcon:item.icon
+                      ),
+                    );
+                    //在中间插入
+                  }).toList()..insert(items.length~/2,
+                   GestureDetector(
                     onTap: () {
-                      if (onTap != null) {
-                        onTap!(index);
-                      }
+                      Navigator.of(context).pushNamed('/record'); 
                     },
-                    child: Padding(
-                      padding: EdgeInsets.only(left: itemSpacing / 2, right: itemSpacing / 2),
-                        child: isSelected?item.activeIcon:item.icon
-                    ),
-                  );
-                  //在中间插入
-                }).toList()..insert(items.length~/2,
-                 GestureDetector(
-                  onTap: () {
-                    Navigator.of(context).pushNamed('/record'); 
-                  },
-                  child: Hero(
-                    tag: 'loginButtonToRecordButton',
                     child: Transform(
                       transform: Matrix4.translationValues(3.6, 0, 0),
                       child: Container(
@@ -85,12 +85,12 @@ class SfssTabBar extends CupertinoTabBar {
                         )
                       ),
                     ),
-                  ),
-                 )
-                )
+                   )
+                  )
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

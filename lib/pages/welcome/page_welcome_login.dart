@@ -5,8 +5,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:lottie/lottie.dart';
+import 'package:sfss/pages/home/page_home.dart';
 import 'package:sfss/plugins/adapter.dart';
 import 'package:sfss/styles/sfss_style.dart';
+import 'package:sfss/widgets/no_animation_page_roughter.dart';
 import 'package:sfss/widgets/sfss_widget.dart';
 
 class PageWelcomeLogin extends StatefulWidget {
@@ -27,6 +29,12 @@ class _PageWelcomeLoginState extends State<PageWelcomeLogin> with TickerProvider
   late List<Animation<double>> slideLefts;
   late List<Animation<double>> slideOpacities;
   late Animation<double> loadingScale;
+  late Animation<double> pushUpOffset;
+
+  late AnimationController animController3;
+  late Animation<double> loadingLeaveScale;
+
+
 
   
   @override
@@ -40,6 +48,11 @@ class _PageWelcomeLoginState extends State<PageWelcomeLogin> with TickerProvider
       duration: const Duration(milliseconds: 3000),
       vsync: this,
     );
+    animController3 = AnimationController(
+      duration: const Duration(milliseconds: 700),
+      vsync: this,
+    );
+    
     
     f = (double begin, double end) => Tween<double>(
       begin: 1.0,
@@ -104,18 +117,25 @@ class _PageWelcomeLoginState extends State<PageWelcomeLogin> with TickerProvider
       if (end > 0.25) end = 0.25;
       slideOpacities.add(f(begin, end));
     }
-    loadingScale = Tween<double>(
+    loadingScale = f(0.3, 0.5);
+
+    pushUpOffset = f(0.15, 0.35);
+
+    f = (double begin, double end) => Tween<double>(
       begin: 1.0,
       end: 0.0,
     ).animate(
       CurvedAnimation(
-        parent: animController2,
+        parent: animController3,
         curve: Interval(
-          0.15,
-          0.4,
-          curve: Curves.easeOut,
+          begin,
+          end,
+          curve: Curves.ease,
         ),
-      ));
+      ),
+    );
+    loadingLeaveScale = f(0.0, 1.0);
+
   }
   @override
   void dispose() {
@@ -251,277 +271,282 @@ class _PageWelcomeLoginState extends State<PageWelcomeLogin> with TickerProvider
     );
   }
   Widget layerLogin() {
-    return Transform(
-      //向下平移
-      transform: Matrix4.translationValues(0, pxh(625) * (offsetUp.value), 0),
-      child: Align(
-        alignment: Alignment.bottomCenter,
-        child: Hero(
-          tag: 'loginSheetToMainSheet',
-          child: Container(
-            width: double.infinity,
-            height: pxh(625),
-            decoration: const BoxDecoration(
-              color: Colors.white,  
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(22),
-                topRight: Radius.circular(22),
+    return AnimatedBuilder(
+      animation: animController2,
+      builder: (context, child) => Transform(
+        transform: Matrix4.translationValues(0, pxh(625) * (offsetUp.value)-pxh(340)+pxh(340)*pushUpOffset.value, 0),
+        child: Align(
+          alignment: Alignment.bottomCenter,
+          child: Hero(
+            tag: 'loginSheetToMainSheet',
+            child: Container(
+              width: double.infinity,
+              height: pxh(625),
+              decoration: const BoxDecoration(
+                color: Colors.white,  
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(22),
+                  topRight: Radius.circular(22),
+                ),
               ),
-            ),
-            child: AnimatedBuilder(
-              animation: animController2,
-              builder: 
-                (context, child) => Stack(
-                  children: [
-                    Column(
-                      children: [
-                        SizedBox(height: pxh(25)),
-                        /*欢迎来到四方食事*/
-                        Row (
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Container(
-                              width: pxh(8.7),
-                              height: pxh(18.5),
-                              decoration: BoxDecoration(
-                                color: const Color(0xFF882F2F),
-                                borderRadius: BorderRadius.circular(pxh(1.55)),
-                              ),
+              child: Stack(
+                children: [
+                  Column(
+                    children: [
+                      SizedBox(height: pxh(25)),
+                      /*欢迎来到四方食事*/
+                      Row (
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Container(
+                            width: pxh(8.7),
+                            height: pxh(18.5),
+                            decoration: BoxDecoration(
+                              color: const Color(0xFF882F2F),
+                              borderRadius: BorderRadius.circular(pxh(1.55)),
                             ),
-                            const SizedBox(width: 5),
-                            SfssWidget.text(
-                              '欢迎来到四方食事',
-                              fontSize: pxfit(19)
-                            ),
-                          ],
+                          ),
+                          const SizedBox(width: 5),
+                          SfssWidget.text(
+                            '欢迎来到四方食事',
+                            fontSize: pxfit(19)
+                          ),
+                        ],
+                      ),
+                      
+                      SizedBox(height: pxh(20),),
+                      /*分割线*/
+                      Container(
+                        width: px(250),
+                        height: 0.5,
+                        decoration: BoxDecoration(
+                          color: const Color(0xFFC4C6CB),
+                          borderRadius: BorderRadius.circular(pxh(2)),
                         ),
-                        
-                        SizedBox(height: pxh(20),),
-                        /*分割线*/
-                        Container(
-                          width: px(250),
-                          height: 0.5,
+                      ),
+                      SizedBox(height: pxh(99),),
+                      /*登陆-标题*/
+                      slideLeftWidget(
+                        index: 6,
+                        child: SfssWidget.text(
+                          '登录',
+                          fontSize: pxfit(36),
+                        ),
+                      ),
+                      SizedBox(height: pxh(43),),
+                      /*请输入手机号*/
+                      slideLeftWidget(
+                        index: 5,
+                        child: Container(
+                          width: px(247, maxScale: 1.2),
+                          height: pxh(37),
+                          padding: const EdgeInsets.all(0),
                           decoration: BoxDecoration(
-                            color: const Color(0xFFC4C6CB),
-                            borderRadius: BorderRadius.circular(pxh(2)),
+                            color: Colors.white,  
+                            borderRadius: BorderRadius.circular(pxh(10)),
+                            boxShadow: const [
+                              BoxShadow(
+                                color: Color(0x1A000000),
+                                offset: Offset(0, 2),
+                                blurRadius: 4,
+                                spreadRadius: 0,
+                              ),
+                            ],
                           ),
-                        ),
-                        SizedBox(height: pxh(99),),
-                        /*登陆-标题*/
-                        slideLeftWidget(
-                          index: 6,
-                          child: SfssWidget.text(
-                            '登录',
-                            fontSize: pxfit(36),
-                          ),
-                        ),
-                        SizedBox(height: pxh(43),),
-                        /*请输入手机号*/
-                        slideLeftWidget(
-                          index: 5,
-                          child: Container(
-                            width: px(247, maxScale: 1.2),
-                            height: pxh(37),
-                            padding: const EdgeInsets.all(0),
+                          child: CupertinoTextField(
+                            placeholder: '请输入手机号',
+                            placeholderStyle: TextStyle(
+                              color: const Color(0xFFA4AAB3),
+                              fontFamily: SfssStyle.mainFont,
+                              fontSize: pxfit(14),
+                            ),
+                            style: TextStyle(
+                              color: SfssStyle.mainGrey,
+                              fontFamily: SfssStyle.mainFont,
+                              fontSize: pxfit(14),
+                              letterSpacing: px(0.5)
+                            ),
+                            padding: EdgeInsets.only(left: px(26, maxScale: 1.2)),
                             decoration: BoxDecoration(
-                              color: Colors.white,  
-                              borderRadius: BorderRadius.circular(pxh(10)),
-                              boxShadow: const [
-                                BoxShadow(
-                                  color: Color(0x1A000000),
-                                  offset: Offset(0, 2),
-                                  blurRadius: 4,
-                                  spreadRadius: 0,
-                                ),
-                              ],
+                              color: Colors.white,
+                              borderRadius: BorderRadius.all(Radius.circular(pxh(10))),
                             ),
-                            child: CupertinoTextField(
-                              placeholder: '请输入手机号',
-                              placeholderStyle: TextStyle(
-                                color: const Color(0xFFA4AAB3),
-                                fontFamily: SfssStyle.mainFont,
-                                fontSize: pxfit(14),
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: pxh(17),),
+                      /*请输入验证码*/
+                      slideLeftWidget(
+                        index: 4,
+                        child: Container(
+                          width: px(247, maxScale: 1.2),
+                          height: pxh(37),
+                          padding: const EdgeInsets.all(0),
+                          decoration: BoxDecoration(
+                            color: Colors.white,  
+                            borderRadius: BorderRadius.circular(pxh(10)),
+                            boxShadow: const [
+                              BoxShadow(
+                                color: Color(0x1A000000),
+                                offset: Offset(0, 2),
+                                blurRadius: 4,
+                                spreadRadius: 0,
                               ),
-                              style: TextStyle(
-                                color: SfssStyle.mainGrey,
-                                fontFamily: SfssStyle.mainFont,
-                                fontSize: pxfit(14),
-                                letterSpacing: px(0.5)
-                              ),
-                              padding: EdgeInsets.only(left: px(26, maxScale: 1.2)),
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.all(Radius.circular(pxh(10))),
-                              ),
-                            ),
+                            ],
                           ),
-                        ),
-                        SizedBox(height: pxh(17),),
-                        /*请输入验证码*/
-                        slideLeftWidget(
-                          index: 4,
-                          child: Container(
-                            width: px(247, maxScale: 1.2),
-                            height: pxh(37),
-                            padding: const EdgeInsets.all(0),
-                            decoration: BoxDecoration(
-                              color: Colors.white,  
-                              borderRadius: BorderRadius.circular(pxh(10)),
-                              boxShadow: const [
-                                BoxShadow(
-                                  color: Color(0x1A000000),
-                                  offset: Offset(0, 2),
-                                  blurRadius: 4,
-                                  spreadRadius: 0,
-                                ),
-                              ],
-                            ),
-                            child: Row(
-                              children: [
-                                SizedBox(
-                                  width: px(160, maxScale: 1.2),
-                                  child: CupertinoTextField(
-                                    placeholder: '请输入验证码',
-                                    placeholderStyle: TextStyle(
-                                      color: const Color(0xFFA4AAB3),
-                                      fontFamily: SfssStyle.mainFont,
-                                      fontSize: pxfit(14),
-                                    ),
-                                    style: TextStyle(
-                                      color: SfssStyle.mainGrey,
-                                      fontFamily: SfssStyle.mainFont,
-                                      fontSize: pxfit(14),
-                                      letterSpacing: px(0.5)
-                                    ),
-                                    padding: EdgeInsets.only(left: px(26, maxScale: 1.2)),
-                                    decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius: BorderRadius.all(Radius.circular(pxh(10))),
-                                    ),
-                                  ),
-                                ),
-                                Container(
-                                  width: 0.3,
-                                  height: pxh(11),
-                                  color: const Color(0xFFA4AAB3),
-                                ),
-                                Expanded( 
-                                  child: Center(
-                                    child: SfssWidget.text(
-                                      '获取验证码',
-                                      fontSize: pxfit(14),
-                                      color: Color(0xFF858A92),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        SizedBox(height: pxh(17),),
-                        /*登录按钮*/
-                        slideLeftWidget(
-                          index: 3,
-                          child: SizedBox(
-                            width: px(246, maxScale: 1.2),
-                            height: pxh(37),
-                            child: SfssWidget.button(
-                              text: '登录',
-                              fontSize: pxfit(15),
-                              borderRadius: BorderRadius.circular(pxh(10)),
-                              onPressed: (){
-                                animController2.forward();
-                                Future.delayed(Duration(seconds: 2), () {
-                                  animController2.animateTo(0.18).then((value) {;
-                                    if(mounted){
-                                      Navigator.pushNamed(context, '/home');
-                                    }
-                                  });
-                                });
-                                // Navigator.pushNamed(context, '/home');
-                              },
-                            ),
-                          ),
-                        ),
-                        SizedBox(height: pxh(10),),
-                        /*去逛逛*/
-                        slideLeftWidget(
-                          index: 2,
-                          child: SfssWidget.text(
-                            '去逛逛',
-                            fontSize: pxfit(12),
-                            color: const Color(0xFFA0A2A8)
-                          ),
-                        ),
-                        SizedBox(height: pxh(70),),
-                        /*其他登录方式*/
-                        slideLeftWidget(
-                          index: 1,
                           child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
                             children: [
+                              SizedBox(
+                                width: px(160, maxScale: 1.2),
+                                child: CupertinoTextField(
+                                  placeholder: '请输入验证码',
+                                  placeholderStyle: TextStyle(
+                                    color: const Color(0xFFA4AAB3),
+                                    fontFamily: SfssStyle.mainFont,
+                                    fontSize: pxfit(14),
+                                  ),
+                                  style: TextStyle(
+                                    color: SfssStyle.mainGrey,
+                                    fontFamily: SfssStyle.mainFont,
+                                    fontSize: pxfit(14),
+                                    letterSpacing: px(0.5)
+                                  ),
+                                  padding: EdgeInsets.only(left: px(26, maxScale: 1.2)),
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.all(Radius.circular(pxh(10))),
+                                  ),
+                                ),
+                              ),
                               Container(
-                                width: px(78),
-                                height: 0.3,
+                                width: 0.3,
+                                height: pxh(11),
                                 color: const Color(0xFFA4AAB3),
                               ),
-                              const SizedBox(width: 9),
-                              SfssWidget.text(
-                                '其他登录方式',
-                                fontSize: pxfit(12),
-                                color: const Color(0xFFA0A2A8)
-                              ),
-                              const SizedBox(width: 9),
-                              Container(
-                                width: px(78),
-                                height: 0.3,
-                                color: const Color(0xFFA4AAB3),
+                              Expanded( 
+                                child: Center(
+                                  child: SfssWidget.text(
+                                    '获取验证码',
+                                    fontSize: pxfit(14),
+                                    color: Color(0xFF858A92),
+                                  ),
+                                ),
                               ),
                             ],
                           ),
                         ),
-                        SizedBox(height: pxh(16)),
-                        /*登录方式图标*/
-                        slideLeftWidget(
-                          index: 0,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              SizedBox(
-                                width: pxh(40),
-                                height: pxh(40),
-                                child: SvgPicture.asset('assets/images/welcome/wechat.svg'),
-                              ),
-                              // const SizedBox(width: 20),
-                              // Container(
-                              //   width: px(40),
-                              //   height: px(40),
-                              //   decoration: BoxDecoration(
-                              //     color: const Color(0xFFE5E5E5),
-                              //     borderRadius: BorderRadius.circular(px(20)),
-                              //   ),
-                              // ),
-                            ]
+                      ),
+                      SizedBox(height: pxh(17),),
+                      /*登录按钮*/
+                      slideLeftWidget(
+                        index: 3,
+                        child: SizedBox(
+                          width: px(246, maxScale: 1.2),
+                          height: pxh(37),
+                          child: SfssWidget.button(
+                            text: '登录',
+                            fontSize: pxfit(15),
+                            borderRadius: BorderRadius.circular(pxh(10)),
+                            onPressed: (){
+                              animController2.forward();
+                              Future.delayed(Duration(milliseconds: 3500), () async {
+                                await animController3.animateTo(0.5);
+                                if (mounted) {
+                                  Navigator.of(context).push(NoAnimationPageRoute(builder: (context) => PageHome()));
+                                  // Navigator.pushReplacementNamed(context, '/home');
+                                }
+                                Future.delayed(Duration(seconds: 2),(){
+                                  animController2.reset();
+                                });
+                              });
+                              // Navigator.pushNamed(context, '/home');
+                            },
                           ),
-                        )
-                      ],
-                    ),
-                    Center(
-                      child: Opacity(
+                        ),
+                      ),
+                      SizedBox(height: pxh(10),),
+                      /*去逛逛*/
+                      slideLeftWidget(
+                        index: 2,
+                        child: SfssWidget.text(
+                          '去逛逛',
+                          fontSize: pxfit(12),
+                          color: const Color(0xFFA0A2A8)
+                        ),
+                      ),
+                      SizedBox(height: pxh(70),),
+                      /*其他登录方式*/
+                      slideLeftWidget(
+                        index: 1,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Container(
+                              width: px(78),
+                              height: 0.3,
+                              color: const Color(0xFFA4AAB3),
+                            ),
+                            const SizedBox(width: 9),
+                            SfssWidget.text(
+                              '其他登录方式',
+                              fontSize: pxfit(12),
+                              color: const Color(0xFFA0A2A8)
+                            ),
+                            const SizedBox(width: 9),
+                            Container(
+                              width: px(78),
+                              height: 0.3,
+                              color: const Color(0xFFA4AAB3),
+                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(height: pxh(16)),
+                      /*登录方式图标*/
+                      slideLeftWidget(
+                        index: 0,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            SizedBox(
+                              width: pxh(40),
+                              height: pxh(40),
+                              child: SvgPicture.asset('assets/images/welcome/wechat.svg'),
+                            ),
+                            // const SizedBox(width: 20),
+                            // Container(
+                            //   width: px(40),
+                            //   height: px(40),
+                            //   decoration: BoxDecoration(
+                            //     color: const Color(0xFFE5E5E5),
+                            //     borderRadius: BorderRadius.circular(px(20)),
+                            //   ),
+                            // ),
+                          ]
+                        ),
+                      )
+                    ],
+                  ),
+                  Align(
+                    alignment: Alignment.bottomCenter,
+                    child: AnimatedBuilder(
+                      animation: animController3,
+                      builder: (context, child)=>Opacity(
                         opacity: min(0.68, 1-loadingScale.value),
                           //缩放
                         child: Transform.scale(
-                          scale: 1-loadingScale.value,
+                          scale: (1-loadingScale.value)*loadingLeaveScale.value,
                           child:  SizedBox(
                             width: pxfit(140),
                             height: pxfit(140),
                             child: Lottie.asset('assets/images/loadingSfss.json', fit: BoxFit.cover),
                           ),
                         )
-                      )
+                      ),
                     )
-                  ],
-                ),
+                  )
+                ],
+              ),
             ),
           ),
         ),
@@ -562,7 +587,7 @@ class _PageWelcomeLoginState extends State<PageWelcomeLogin> with TickerProvider
           child: Align(
             alignment: Alignment.topCenter,
             child: SizedBox(
-              height: pxh(348),
+              height: pxh(256),
               child: Container(
                 decoration: const BoxDecoration(
                   image: DecorationImage(
@@ -577,6 +602,24 @@ class _PageWelcomeLoginState extends State<PageWelcomeLogin> with TickerProvider
       ],
     );
   }
+
+  Widget layerTabBarHero() {
+    return Align(
+      alignment: Alignment(0.0, 1.5),
+      child: Hero(
+        tag: 'tabBar',
+        child: Opacity(
+          opacity: 1-bgOpacity.value,
+          child: Container(
+            width: double.infinity,
+            height: 70,
+            color: Colors.white,
+          ),
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     Adapter(context: context);
@@ -590,6 +633,7 @@ class _PageWelcomeLoginState extends State<PageWelcomeLogin> with TickerProvider
               layerTitle(),
               layerButtom(),
               layerLogin(),
+              layerTabBarHero()
             ],
           );
         },

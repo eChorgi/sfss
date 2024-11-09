@@ -15,17 +15,19 @@ class _ScreenHomeState extends State<ScreenHome> with TickerProviderStateMixin {
   late AnimationController animController;
   late Animation<double> Function(double, double) f;
   late List<Animation<double>> slideOffsets;
+  late Animation<double> bgOpacity;
   late List<Animation<double>> slideOpacities;
   @override
   void initState() {
+
     super.initState();
     animController = AnimationController(
       duration: const Duration(milliseconds: 1000),
       vsync: this,
-    );
+    )..forward();
     f = (double begin, double end) => Tween<double>(
-      begin: 1.0,
-      end: 0.0,
+      begin: 0,
+      end: 1,
     ).animate(
       CurvedAnimation(
         parent: animController,
@@ -57,6 +59,7 @@ class _ScreenHomeState extends State<ScreenHome> with TickerProviderStateMixin {
       if (end > 0.25) end = 0.25;
       slideOpacities.add(f(begin, end));
     }
+    bgOpacity = f(0.0, 0.5);
   }
   @override
   void dispose() {
@@ -69,7 +72,7 @@ class _ScreenHomeState extends State<ScreenHome> with TickerProviderStateMixin {
       child: Hero(
         tag: "loginSheetToMainSheet",
         child: Container(
-          height: pxh(680)-px(20, extraHScale: -1.2),
+          height: pxh(760)-px(30, extraHScale: -1.2),
           width: double.infinity,
           decoration: const BoxDecoration(
             color: Colors.white,  
@@ -107,32 +110,37 @@ class _ScreenHomeState extends State<ScreenHome> with TickerProviderStateMixin {
   Widget layerBackground() {
     return Align(
       alignment: Alignment.topCenter,
-      child: Container(
-        width: double.infinity,
-        height: pxh(256),
-        decoration: const BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage("assets/images/home/background.png"),
-            fit: BoxFit.cover,
+      child: 
+      Stack(
+        children: [
+          Container(
+            width: double.infinity,
+            height: pxh(256),
+            decoration: const BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage("assets/images/home/background.png"),
+                fit: BoxFit.cover,
+              ),
+            ),
+            child: Column(
+              children: [
+                SizedBox(height: pxh(50)),
+                SfssWidget.text(
+                  '立冬',
+                  fontSize: pxfit(36, extraWScale: 0.15, maxScale: 1.0, noLimitExtraWScale: 0.2),
+                  color: Colors.white,
+                ),
+                SizedBox(height: pxh(4, extraWScale: 0.8, maxScale: 1.5)),
+                SfssWidget.text(
+                  '冬时韵悠长，烹茶品暗香。',
+                  fontSize: pxfit(12.5, extraWScale: 0.15, maxScale: 1.0, noLimitExtraWScale: 0.2),
+                  color: Colors.white,
+                ),
+              ],
+            ),
           ),
-        ),
-        child: Column(
-          children: [
-            SizedBox(height: pxh(50)),
-            SfssWidget.text(
-              '立冬',
-              fontSize: pxfit(36, extraWScale: 0.15, maxScale: 1.0, noLimitExtraWScale: 0.2),
-              color: Colors.white,
-            ),
-            SizedBox(height: pxh(4, extraWScale: 0.8, maxScale: 1.5)),
-            SfssWidget.text(
-              '冬时韵悠长，烹茶品暗香。',
-              fontSize: pxfit(12.5, extraWScale: 0.15, maxScale: 1.0, noLimitExtraWScale: 0.2),
-              color: Colors.white,
-            ),
-          ],
-        ),
-      ),
+        ],
+      )
     );
   }
 

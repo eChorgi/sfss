@@ -1,19 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:sfss/pages/home/wigets/adaptive_widget.dart';
-import 'package:sfss/plugins/widget_adapter.dart';
 import 'package:sfss/styles/sfss_style.dart';
+import 'package:sfss/widgets/fit_width_image.dart';
 import 'package:sfss/widgets/sfss_widget.dart';
 
 class UserPostCard extends StatefulWidget {
-  const UserPostCard({super.key});
+  final String imageUrl;
+  final int index;
+  const UserPostCard({super.key, required this.imageUrl, required this.index});
 
   @override
   State<UserPostCard> createState() => _UserPostCardState();
 }
 
 class _UserPostCardState extends State<UserPostCard> {
-
   @override
   Widget build(BuildContext context) {
     return AdaptiveWidget(
@@ -25,19 +26,17 @@ class _UserPostCardState extends State<UserPostCard> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Container(
+              width: double.infinity,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(px(10.0, maxScale: 1.5, minScale: 1.0)),
               ),
-              child: Image.asset(
-                'assets/images/dish_yxqz.png',
-                fit: BoxFit.fitWidth,
-                width: double.infinity,
-                height: 100,
-              ),
+              child: FitWidthImage.asset(
+                widget.imageUrl
+              )
             ),
             SizedBox(height: px(3, maxScale: 1.5)),
             Padding(
-              padding: EdgeInsets.only(left: px(6, maxScale: 1.5), right: px(6, maxScale: 1.5)),
+              padding: EdgeInsets.only(left: px(4, maxScale: 1.5), right: px(4, maxScale: 1.5)),
               child: Align(
                 alignment: Alignment.topLeft,
                 child: RichText(
@@ -50,7 +49,7 @@ class _UserPostCardState extends State<UserPostCard> {
                             width: px(13, maxScale: 1.5, minScale: 1.0),
                             height: px(12, maxScale: 1.5, minScale: 1.0),
                             decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(px(4)),
+                              borderRadius: BorderRadius.circular(px(4, maxScale:1.5)),
                               color: SfssStyle.mainRed,
                             ),
                             child: Center(
@@ -64,7 +63,7 @@ class _UserPostCardState extends State<UserPostCard> {
                         )
                       ),
                       TextSpan(
-                        text: '绝绝子美味的饭大家快来学绝绝子美味的饭大家快来学绝绝子美味的饭大家快来学绝绝子美味的饭大家快来学', 
+                        text: '绝绝子好吃美味的饭快来学，无敌了，谱子已发', 
                         style: TextStyle(
                           color: SfssStyle.mainGrey,
                           fontSize: px(10, maxScale: 1.5, minScale: 1.0),
@@ -83,7 +82,7 @@ class _UserPostCardState extends State<UserPostCard> {
             ),
             SizedBox(height: px(0, maxScale: 1.5)),
             Padding(
-              padding: EdgeInsets.only(left: px(6, maxScale: 1.5), right: px(6, maxScale: 1.5)),
+              padding: EdgeInsets.only(left: px(4, maxScale: 1.5), right: px(4, maxScale: 1.5)),
               child: Align(
                 alignment: Alignment.centerLeft,
                 child: SizedBox(
@@ -96,15 +95,15 @@ class _UserPostCardState extends State<UserPostCard> {
                           children: [
                             Image.asset(
                               'assets/images/Ellipse 2.png',
-                              width: px(15, maxScale: 1.5),
-                              height: px(15, maxScale: 1.5),
+                              width: px(13, maxScale: 1.5),
+                              height: px(13, maxScale: 1.5),
                             ),
-                            SizedBox(width: px(5, maxScale: 1.5)),
+                            SizedBox(width: px(3, maxScale: 1.5)),
                             Expanded(
                               child: SfssWidget.text(
                                 '绝绝子123213212312313',
-                                fontSize: px(10, maxScale: 1.5, minScale: 1.0),
-                                color: SfssStyle.mainGrey,
+                                fontSize: px(8, maxScale: 1.5, minScale: 1.0),
+                                color: const Color(0xCC4A5568),
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis
                               ),
@@ -112,6 +111,7 @@ class _UserPostCardState extends State<UserPostCard> {
                           ],
                         ),
                       ),
+                      SizedBox(width: px(6, maxScale: 1.5)),
                       SizedBox(
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.center,
@@ -120,16 +120,16 @@ class _UserPostCardState extends State<UserPostCard> {
                               padding: EdgeInsets.only(top: px(0.8, maxScale: 1.5)),
                               child: SvgPicture.asset(
                                 'assets/images/home/like.svg',
-                                width: px(12, maxScale: 1.5),
-                                height: px(12, maxScale: 1.5),
+                                width: px(10, maxScale: 1.5),
+                                height: px(10, maxScale: 1.5),
                               ),
                             ),
                             SizedBox(width: px(3, maxScale: 1.5)),
                             SfssWidget.text(
                               '204',
                               fontFamily: '',
-                              fontSize: px(10, maxScale: 1.5, minScale: 1.0),
-                              color: SfssStyle.mainGrey,
+                              fontSize: px(8, maxScale: 1.5, minScale: 1.0),
+                              color: const Color(0xCC4A5568),
                             ),
                           ],
                         ),

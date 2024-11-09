@@ -6,34 +6,6 @@ import 'package:sfss/styles/sfss_style.dart';
 
 
 class SfssWidget{
-  static Widget assetImage(String name) {
-    return LayoutBuilder(
-      builder: (context, boxConstraints){
-        Image image = Image.asset(
-          name,
-          fit: BoxFit.fitWidth,
-          width: double.infinity,
-        );
-        double ?imgW, imgH;
-        image.image
-          .resolve(new ImageConfiguration())
-          .addListener(
-            new ImageStreamListener(
-            (ImageInfo info, bool _) {
-              imgW = info.image.width.toDouble();
-              imgH = info.image.height.toDouble();
-            })
-          );
-        var displayH = imgH!*boxConstraints.maxWidth/imgW!;
-        return Image.asset(
-          name,
-          fit: BoxFit.fitWidth,
-          width: double.infinity,
-          height: max(100, min(200, displayH)),
-        );
-      }
-    );
-  }
 
   static Widget text(String content, {Color ?color, double ?fontSize, String? fontFamily, TextAlign ?textAlign, TextOverflow ?overflow, int ?maxLines, TextDecoration ?decoration}) {
     return Text(

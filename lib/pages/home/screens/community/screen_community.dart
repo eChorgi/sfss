@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:sfss/pages/home/screens/community/user_post_card.dart';
+import 'package:sfss/pages/home/wigets/adaptive_columns.dart';
 import 'package:sfss/pages/home/wigets/diet_progress.dart';
 import 'package:sfss/plugins/adapter.dart';
 import 'package:sfss/styles/sfss_style.dart';
@@ -72,7 +73,7 @@ class _ScreenCommunityState extends State<ScreenCommunity> with TickerProviderSt
       child: Hero(
         tag: "loginSheetToMainSheet",
         child: Container(
-          height: pxh(680)-px(20, extraHScale: -1.2),
+          height: pxh(760)-px(30, extraHScale: -1.2),
           width: double.infinity,
           decoration: const BoxDecoration(
             color: Colors.white,  
@@ -81,103 +82,120 @@ class _ScreenCommunityState extends State<ScreenCommunity> with TickerProviderSt
               topRight: Radius.circular(22),
             ),
           ),
-          child: MediaQuery.removePadding(
-            context: context,
-            removeTop: true, //去除顶部的空白
-            child: ListView(
-              children: [
-                Column(
-                  children: [
-                    SizedBox(
-                      height: pxh(50,maxScale: 1),
-                      width: double.infinity,
-                      child: Align(
-                        alignment: Alignment.bottomCenter,
-                        child: SizedBox(
-                          height: pxh(35,maxScale: 1),
-                          width: px(319),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              SizedBox(width: px(23, maxScale: 1),),
-                              // Column(
-                              //   children: [
-                              //     SizedBox(height: 9,),
-                              SfssWidget.text(
-                              "推荐",
-                              fontSize: px(15, maxScale:1),
-                              color: indexSelected==0?SfssStyle.mainRed:SfssStyle.mainGrey
-                              ),
-                              //     SizedBox(height: 6,),
-                              //     Container(
-                              //       height: 2,
-                              //       width: 23,
-                              //       decoration: BoxDecoration(
-                              //         color: indexSelected==0?SfssStyle.mainRed:Colors.transparent,
-                              //         borderRadius: BorderRadius.circular(12),
-                              //       ),
-                              //     ),
-                              //   ],
-                              // ),
-                              SfssWidget.text(
-                              "/",
-                              fontSize: px(12, maxScale:1),
-                              color: SfssStyle.mainGrey
-                              ),
-                              SfssWidget.text(
-                              "菜谱",
-                              fontSize: px(15, maxScale:1),
-                              color: indexSelected==1?SfssStyle.mainRed:SfssStyle.mainGrey
-                              ),
-                              SfssWidget.text(
-                              "/",
-                              fontSize: px(12, maxScale:1),
-                              color: SfssStyle.mainGrey
-                              ),
-                              SfssWidget.text(
-                              "饮食",
-                              fontSize: px(15, maxScale:1),
-                              color: indexSelected==2?SfssStyle.mainRed:SfssStyle.mainGrey
-                              ),
-                              SfssWidget.text(
-                              "/",
-                              fontSize: px(12, maxScale:1),
-                              color: SfssStyle.mainGrey
-                              ),
-                              SfssWidget.text(
-                              "关注",
-                              fontSize: px(15, maxScale:1),
-                              color: indexSelected==3?SfssStyle.mainRed:SfssStyle.mainGrey
-                              ),
-                              SizedBox(width: px(8),),
-                              Image.asset("assets/images/Ellipse 2.png", width: px(35, maxScale: 1), height: px(35, maxScale:1),),
-                              
-                            ],
-                          ),
+          child: Column(
+            children: [
+              SizedBox(
+                height: pxh(50,maxScale: 1),
+                width: double.infinity,
+                child: Align(
+                  alignment: Alignment.bottomCenter,
+                  child: SizedBox(
+                    height: pxh(35,maxScale: 1),
+                    width: px(319),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        SizedBox(width: px(23, maxScale: 1),),
+                        // Column(
+                        //   children: [
+                        //     SizedBox(height: 9,),
+                        SfssWidget.text(
+                        "推荐",
+                        fontSize: px(15, maxScale:1),
+                        color: indexSelected==0?SfssStyle.mainRed:SfssStyle.mainGrey
                         ),
-                      ),
-                    ),
-                    Center(
-                      child: Padding(
-                        padding: EdgeInsets.only(right: px(34)),
-                        child: Container(
-                          height: 0.9,
-                          width: px(247),
-                          color: const Color(0xFFC4C6CB),
+                        //     SizedBox(height: 6,),
+                        //     Container(
+                        //       height: 2,
+                        //       width: 23,
+                        //       decoration: BoxDecoration(
+                        //         color: indexSelected==0?SfssStyle.mainRed:Colors.transparent,
+                        //         borderRadius: BorderRadius.circular(12),
+                        //       ),
+                        //     ),
+                        //   ],
+                        // ),
+                        SfssWidget.text(
+                        "/",
+                        fontSize: px(12, maxScale:1),
+                        color: SfssStyle.mainGrey
                         ),
-                      ),
+                        SfssWidget.text(
+                        "菜谱",
+                        fontSize: px(15, maxScale:1),
+                        color: indexSelected==1?SfssStyle.mainRed:SfssStyle.mainGrey
+                        ),
+                        SfssWidget.text(
+                        "/",
+                        fontSize: px(12, maxScale:1),
+                        color: SfssStyle.mainGrey
+                        ),
+                        SfssWidget.text(
+                        "饮食",
+                        fontSize: px(15, maxScale:1),
+                        color: indexSelected==2?SfssStyle.mainRed:SfssStyle.mainGrey
+                        ),
+                        SfssWidget.text(
+                        "/",
+                        fontSize: px(12, maxScale:1),
+                        color: SfssStyle.mainGrey
+                        ),
+                        SfssWidget.text(
+                        "关注",
+                        fontSize: px(15, maxScale:1),
+                        color: indexSelected==3?SfssStyle.mainRed:SfssStyle.mainGrey
+                        ),
+                        SizedBox(width: px(8),),
+                        Image.asset("assets/images/Ellipse 2.png", width: px(35, maxScale: 1), height: px(35, maxScale:1),),
+                        
+                      ],
                     ),
-                    SizedBox(height: pxh(15, extraWScale: 0.3, maxScale: 1.2)),
-                    SizedBox(
-                      width: 202,
-                      height: 402 ,
-                        child: UserPostCard()
-                    )
-                    
-                  ],
+                  ),
                 ),
-              ],
-            ),
+              ),
+              Center(
+                child: Padding(
+                  padding: EdgeInsets.only(right: px(34)),
+                  child: Container(
+                    height: 0.9,
+                    width: px(247),
+                    color: const Color(0xFFC4C6CB),
+                  ),
+                ),
+              ),
+              SizedBox(height: pxh(15, extraWScale: 0.3, maxScale: 1.2)),
+              Expanded(
+              child: Align(
+                alignment: Alignment.topCenter,
+                  child: Padding(
+                    padding: EdgeInsets.only(left: px(15), right: px(15)),
+                    child: const AdaptiveColumns(
+                      chilren: [
+                        UserPostCard(imageUrl: 'assets/images/dish_yxqz.png', index: 1),
+                        UserPostCard(imageUrl: 'assets/images/foodStory.png', index: 2),
+                        UserPostCard(imageUrl: 'assets/images/foodStory.png', index: 3),
+                        UserPostCard(imageUrl: 'assets/images/foodStory.png', index: 4),
+                        UserPostCard(imageUrl: 'assets/images/foodStory.png', index: 5),
+                        UserPostCard(imageUrl: 'assets/images/test_shou.jpg', index: 6),
+                        UserPostCard(imageUrl: 'assets/images/foodStory.png', index: 7),
+                        UserPostCard(imageUrl: 'assets/images/foodStory.png', index: 8),
+                        UserPostCard(imageUrl: 'assets/images/foodStory.png', index: 9),
+                        UserPostCard(imageUrl: 'assets/images/foodStory.png', index: 10),
+                        UserPostCard(imageUrl: 'assets/images/foodStory.png', index: 11),
+                        UserPostCard(imageUrl: 'assets/images/foodStory.png', index: 12),
+                        UserPostCard(imageUrl: 'assets/images/foodStory.png', index: 13),
+                        UserPostCard(imageUrl: 'assets/images/foodStory.png', index: 14),
+                        UserPostCard(imageUrl: 'assets/images/foodStory.png', index: 15),
+                        UserPostCard(imageUrl: 'assets/images/foodStory.png', index: 16),
+                        UserPostCard(imageUrl: 'assets/images/foodStory.png', index: 17),
+                      ]
+                    ),
+                  )
+                ),
+              ),
+              
+              
+            ],
           ),
         ),
       ),

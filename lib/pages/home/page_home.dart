@@ -33,7 +33,7 @@ class _PageHomeState extends State<PageHome> with TickerProviderStateMixin {
         currentIndex: subPageIndex,
         items: <BottomNavigationBarItem>[
           SfssWidget.tabBarItem('首页'),
-          SfssWidget.tabBarItem('荐赏'),
+          SfssWidget.tabBarItem('时令'),
           SfssWidget.tabBarItem('坊间'),
           SfssWidget.tabBarItem('往迹'),
         ],
