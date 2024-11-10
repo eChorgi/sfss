@@ -624,7 +624,6 @@ class _PageWelcomeLoginState extends State<PageWelcomeLogin> with TickerProvider
 
   @override
   Widget build(BuildContext context) {
-    print(solarTermName[ SfssUtils.getSolarTermByDate(DateTime.now()).index]);
     Adapter(context: context);
     return CupertinoPageScaffold(
       child: AnimatedBuilder(

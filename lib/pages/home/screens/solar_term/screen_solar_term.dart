@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:sfss/pages/home/screens/community/user_post_card.dart';
-import 'package:sfss/pages/home/screens/home/record_overview.dart';
 import 'package:sfss/plugins/adapter.dart';
 import 'package:sfss/styles/sfss_style.dart';
-import 'package:sfss/widgets/heatmap_calendar.dart';
 import 'package:sfss/widgets/sfss_widget.dart';
+import 'package:sfss/widgets/solar_term_badge.dart';
+import 'package:sfss/widgets/top_toggle.dart';
 
 class ScreenSolarTerm extends StatefulWidget {
   const ScreenSolarTerm({ Key? key }) : super(key: key);
@@ -15,7 +14,7 @@ class ScreenSolarTerm extends StatefulWidget {
 }
 
 class _ScreenSolarTermState extends State<ScreenSolarTerm> with TickerProviderStateMixin {
-  
+  int index = 0;
   Widget layerSheet() {
     return Align(
       alignment: Alignment.bottomCenter,
@@ -29,30 +28,32 @@ class _ScreenSolarTermState extends State<ScreenSolarTerm> with TickerProviderSt
             topRight: Radius.circular(22),
           ),
         ),
-        child: Stack(
+        child: Column(
           children: [
-            MediaQuery.removePadding(
-              context: context,
-              removeTop: true, //去除顶部的空白
-              child: ListView(
-                children: [
-                  Column(
-                    children: [
-                      // 其他内容
-                    ],
-                  ),
-                ],
-              ),
+            TopToggle(
+              names: const ['徽章','笔记'], 
+              contents: [
+              ],
+              onTap: (i) {
+                index = i;
+              },
             ),
-            Positioned(
-              top: 0,
-              left: 0,
-              right: 0,
-              child: Container(
-                height: pxh(60),
-                width: double.infinity,
-                child: Center(
-                  child: ToggleContent(),
+            Expanded(
+              child: MediaQuery.removePadding(
+                context: context,
+                removeTop: true, //去除顶部的空白
+                child: ListView(
+                  children: [
+                    Column(
+                      children: [
+                        SizedBox(
+                          width: 100,
+                          height: 100,
+                          child: SolarTermBadge()
+                        )
+                      ],
+                    ),
+                  ],
                 ),
               ),
             ),
@@ -112,159 +113,12 @@ class _ScreenSolarTermState extends State<ScreenSolarTerm> with TickerProviderSt
   }
 }
 
-class ToggleContent extends StatefulWidget {
-  @override
-  _ToggleContentState createState() => _ToggleContentState();
-}
-class _ToggleContentState extends State<ToggleContent> {
-  bool showBadge = true;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Container(
-          width: px(204),
-          height: pxh(45),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              GestureDetector(
-                onTap: () {
-                  setState(() {
-                    showBadge = true;
-                  });
-                },
-                child: Container(
-                  width: px(61),
-                  height: pxh(19),
-                  child: Row(
-                    children: [
-                      Container(
-                        width: px(9),
-                        height: pxh(19),
-                        decoration: BoxDecoration(
-                          color: showBadge ? SfssStyle.mainRed: Colors.grey,
-                          borderRadius: BorderRadius.circular(2),
-                        ),
-                      ),
-                      SizedBox(width: px(4)),
-                      SfssWidget.text(
-                        '徽章',
-                        fontSize: pxfit(20),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              SfssWidget.text(
-                '/',
-                fontSize: pxfit(20),
-              ),
-              GestureDetector(
-                onTap: () {
-                  setState(() {
-                    showBadge = false;
-                  });
-                },
-                child: Container(
-                  width: px(61),
-                  height: pxh(19),
-                  child: Row(
-                    children: [
-                      Container(
-                        width: px(9),
-                        height: pxh(19),
-                        decoration: BoxDecoration(
-                          color: showBadge ? Colors.grey : SfssStyle.mainRed,
-                          borderRadius: BorderRadius.circular(2),
-                        ),
-                      ),
-                      SizedBox(width: px(4)),
-                      SfssWidget.text(
-                        '笔记',
-                        fontSize: pxfit(20),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-        SizedBox(height: pxh(10)),
-        showBadge ? BadgeContent() : NoteContent(),
-      ],
-    );
-  }
-}
-
-
 class BadgeContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        buildRow(),
-        buildRow(),
-        buildRow(),
       ],
-    );
-  }
-
-  Widget buildRow() {
-    return Container(
-      height: pxh(136),
-      child: Row(
-        children: [
-          Expanded(
-            flex: 49,
-            child: Container(),
-          ),
-          buildCircle(),
-          Expanded(
-            flex: 20,
-            child: Container(),
-          ),
-          buildCircle(),
-          Expanded(
-            flex: 20,
-            child: Container(),
-          ),
-          buildCircle(),
-          Expanded(
-            flex: 49,
-            child: Container(),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget buildCircle() {
-    return Expanded(
-      flex: 84,
-      child: Align(
-        alignment: Alignment.topCenter,
-        child: Container(
-          width: px(84),
-          height: px(84),
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            color: SfssStyle().badgeLevelColors[0],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-
-class NoteContent extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      
     );
   }
 }

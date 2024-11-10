@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:sfss/pages/home/screens/community/screen_community.dart';
 import 'package:sfss/pages/home/screens/home/screen_home.dart';
 import 'package:sfss/pages/home/screens/home/diet_progress.dart';
+import 'package:sfss/pages/home/screens/solar_term/screen_solar_term.dart';
 import 'package:sfss/plugins/adapter.dart';
 import 'package:sfss/styles/sfss_style.dart';
 import 'package:sfss/widgets/sfss_widget.dart';
@@ -41,7 +42,7 @@ class _PageHomeState extends State<PageHome> with TickerProviderStateMixin {
       tabBuilder: (context, index) {
         return const [
           ScreenHome(),
-          ScreenHome(),
+          ScreenSolarTerm(),
           ScreenCommunity(),
           ScreenHome(),
         ][index];
