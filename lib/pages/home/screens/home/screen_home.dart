@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:sfss/enums/solar_term_enums.dart';
@@ -7,6 +9,7 @@ import 'package:sfss/pages/home/screens/home/record_overview.dart';
 import 'package:sfss/pages/home/screens/home/diet_progress.dart';
 import 'package:sfss/pages/home/screens/home/today_food_info.dart';
 import 'package:sfss/plugins/adapter.dart';
+import 'package:sfss/widgets/adaptive_list_views.dart';
 import 'package:sfss/widgets/heatmap_calendar.dart';
 import 'package:sfss/widgets/sfss_widget.dart';
 
@@ -28,12 +31,15 @@ class _ScreenHomeState extends State<ScreenHome> with TickerProviderStateMixin {
 
     super.initState();
     animController = AnimationController(
-      duration: const Duration(milliseconds: 1000),
+      duration: const Duration(milliseconds: 2400),
       vsync: this,
     )..forward();
+    // Future.delayed(Duration(seconds: 1), (){
+    //   animController.forward();
+    // });
     f = (double begin, double end) => Tween<double>(
-      begin: 0,
-      end: 1,
+      begin: 1.0,
+      end: 0.0,
     ).animate(
       CurvedAnimation(
         parent: animController,
@@ -44,11 +50,11 @@ class _ScreenHomeState extends State<ScreenHome> with TickerProviderStateMixin {
         ),
       ),
     );
-    int intvNum = 7;
+    int intvNum = 5;
     slideOffsets = [];
     for(int i = 0; i < intvNum; i++) {
       double interval = 1/intvNum;
-      var begin = 0.1*interval * i;
+      var begin = 0.3*interval * i;
       var end = interval * (i + 1);
 
       if (begin < 0.0) begin = 0.0;
@@ -57,22 +63,32 @@ class _ScreenHomeState extends State<ScreenHome> with TickerProviderStateMixin {
     }
     slideOpacities = [];
     for(int i = 0; i < intvNum; i++) {
-      double interval = 0.25/intvNum;
-      var begin = 0.1*interval * i;
+      double interval = 1/intvNum;
+      var begin = 0.9*interval * i;
       var end = interval * (i + 1);
 
       if (begin < 0.0) begin = 0.0;
-      if (end > 0.25) end = 0.25;
+      if (end > 1) end = 1;
       slideOpacities.add(f(begin, end));
     }
-    bgOpacity = f(0.0, 0.5);
   }
   @override
   void dispose() {
     animController.dispose();
     super.dispose();
   }
+  Widget slideAnimater({required int index, required Widget child}) {
+    return Opacity(
+      opacity: 1-slideOpacities[index].value,
+      child: Transform(
+        transform: Matrix4.rotationZ(slideOpacities[index].value*0.05)*Matrix4.translationValues(Adapter.adapter?.screenW()*(slideOffsets[index].value), 0, 0),
+        child: child,
+      ),
+    );
+  }
+
   Widget layerSheet() {
+    print(1-slideOpacities[0].value);
     return Align(
       alignment: Alignment.bottomCenter,
       child: Hero(
@@ -95,34 +111,54 @@ class _ScreenHomeState extends State<ScreenHome> with TickerProviderStateMixin {
                 Column(
                   children: [
                     SizedBox(height: pxh(22, extraWScale: 0.15, maxScale: 1.2)),
-                    SfssWidget.text(
-                      '早上好，来一顿热腾腾的饭菜开启今天',
-                      fontSize: pxfit(14, extraWScale: 0.1, maxScale: 1.2)
+                    slideAnimater(
+                      index: 0,
+                      child: SfssWidget.text(
+                        '早上好，来一顿热腾腾的饭菜开启今天',
+                        fontSize: pxfit(14, extraWScale: 0.1, maxScale: 1.2)
+                      ),
                     ),
                     SizedBox(height: pxh(15, extraWScale: 0.3, maxScale: 1.2)),
-                    DietProgress(
-                      width: px(304),
-                      height: pxfit(168),
+                    
+                    slideAnimater(
+                      index: 1,
+                      child:  SizedBox(
+                        width: px(304),
+                        height: pxfit(168),
+                        child: DietProgress(),
+                      ),
                     ),
                     SizedBox(height: pxh(20)),
-                    Center(
-                      child: SizedBox(
-                        width: px(305),
-                        height: px(216),
-                        child: const RecordOverview()
+                    slideAnimater(
+                      index: 2,
+                      child: Center(
+                        child: SizedBox(
+                          width: px(305),
+                          height: px(216),
+                          child: const RecordOverview()
+                        ),
                       ),
                     ),
                     SizedBox(height: pxh(26)),
-                    SizedBox(
-                      width: px(309),
-                      height: px(114),
-                      child: TodayFoodInfo(solarTermIndex: SolarTerm.daxue.index,)
+                    slideAnimater(
+                      index: 3,
+                      child: SizedBox(
+                        width: px(309),
+                        height: px(114),
+                        child: TodayFoodInfo(solarTermIndex: SolarTerm.daxue.index,)
+                      ),
                     ),
+                    
+                    // SizedBox(height: pxh(26)),
+                    
                     SizedBox(height: pxh(20)),
-                    SizedBox(
-                      width: px(306),
-                      height: px(199),
-                      child: PopularTopics(),
+                    slideAnimater(
+                      index: 4,
+                      child:  SizedBox(
+                        width: px(306),
+                        height: px(199),
+                        child: PopularTopics(),
+                      ),
                     ),
                     SizedBox(height: 100),
                   ],

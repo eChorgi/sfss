@@ -4,19 +4,19 @@ import 'package:linked_scroll_controller/linked_scroll_controller.dart';
 import 'package:sfss/styles/sfss_style.dart';
 import 'package:sfss/widgets/sfss_widget.dart';
 
-class AdaptiveColumns extends StatefulWidget {
+class AdaptiveListViews extends StatefulWidget {
   final double minWidth;
   final double maxWidth;
   final double spacingW;
   final double spacingH;
   final List<Widget> chilren;
 
-  const AdaptiveColumns({super.key, required this.chilren, this.minWidth = 150, this.maxWidth = 200, this.spacingW = 8, this.spacingH = 18});
+  const AdaptiveListViews({super.key, required this.chilren, this.minWidth = 150, this.maxWidth = 200, this.spacingW = 8, this.spacingH = 18});
   @override
-  State<AdaptiveColumns> createState() => _AdaptiveColumnsState();
+  State<AdaptiveListViews> createState() => _AdaptiveListViewsState();
 }
 
-class _AdaptiveColumnsState extends State<AdaptiveColumns> {
+class _AdaptiveListViewsState extends State<AdaptiveListViews> {
 
   late LinkedScrollControllerGroup controllerGroup;
   List<ScrollController> controllers = [];
@@ -60,17 +60,20 @@ class _AdaptiveColumnsState extends State<AdaptiveColumns> {
                     child: MediaQuery.removePadding(
                       context: context,
                       removeTop: true,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          for (int itemIndex = 0; itemIndex < ((widget.chilren.length)/columnsNum).ceil()+1; itemIndex+=1)
-                          if(itemIndex*columnsNum+columnIndex < widget.chilren.length)
-                            Padding(
+                      child: ListView.builder(
+                        controller: controllers[columnIndex],
+                        itemCount: ((widget.chilren.length)/columnsNum).ceil()+1,
+                        itemBuilder: (context, itemIndex){
+                          if(itemIndex*columnsNum+columnIndex < widget.chilren.length){
+                            return Padding(
                               padding: (itemIndex==0?const EdgeInsets.all(0.0):EdgeInsets.only(top: widget.spacingH)),
                               child: widget.chilren[(itemIndex*columnsNum+columnIndex).toInt()],
-                            )
-                          
-                        ]
+                            );
+                          }
+                          else {
+                            return const SizedBox(height: 100,);
+                          }
+                        },
                       ),
                     ),
                   ),

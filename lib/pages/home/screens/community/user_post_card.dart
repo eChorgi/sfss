@@ -7,8 +7,11 @@ import 'package:sfss/widgets/sfss_widget.dart';
 
 class UserPostCard extends StatefulWidget {
   final String imageUrl;
-  final int index;
-  const UserPostCard({super.key, required this.imageUrl, required this.index});
+  final String title;
+  final String userName;
+  final String avatarUrl;
+  final int likeCount;
+  const UserPostCard({super.key, required this.imageUrl, required this.title, required this.userName, required this.avatarUrl, required this.likeCount});
 
   @override
   State<UserPostCard> createState() => _UserPostCardState();
@@ -63,7 +66,7 @@ class _UserPostCardState extends State<UserPostCard> {
                         )
                       ),
                       TextSpan(
-                        text: '绝绝子好吃美味的饭快来学，无敌了，谱子已发', 
+                        text: widget.title, 
                         style: TextStyle(
                           color: SfssStyle.mainGrey,
                           fontSize: px(10, maxScale: 1.5, minScale: 1.0),
@@ -93,15 +96,20 @@ class _UserPostCardState extends State<UserPostCard> {
                       Expanded(
                         child: Row(
                           children: [
-                            Image.asset(
-                              'assets/images/Ellipse 2.png',
+                            Container(
                               width: px(13, maxScale: 1.5),
                               height: px(13, maxScale: 1.5),
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                image: DecorationImage(
+                                  image: AssetImage(widget.avatarUrl)
+                                )
+                              ),
                             ),
                             SizedBox(width: px(3, maxScale: 1.5)),
                             Expanded(
                               child: SfssWidget.text(
-                                '绝绝子123213212312313',
+                                widget.userName,
                                 fontSize: px(8, maxScale: 1.5, minScale: 1.0),
                                 color: const Color(0xCC4A5568),
                                 maxLines: 1,
@@ -126,7 +134,7 @@ class _UserPostCardState extends State<UserPostCard> {
                             ),
                             SizedBox(width: px(3, maxScale: 1.5)),
                             SfssWidget.text(
-                              '204',
+                              widget.likeCount.toString(),
                               fontFamily: '',
                               fontSize: px(8, maxScale: 1.5, minScale: 1.0),
                               color: const Color(0xCC4A5568),

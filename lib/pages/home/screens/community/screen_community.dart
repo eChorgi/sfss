@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:sfss/pages/home/screens/community/user_post_card.dart';
-import 'package:sfss/widgets/adaptive_columns.dart';
+import 'package:sfss/widgets/adaptive_list_views.dart';
 import 'package:sfss/pages/home/screens/home/diet_progress.dart';
 import 'package:sfss/plugins/adapter.dart';
 import 'package:sfss/styles/sfss_style.dart';
@@ -169,25 +169,25 @@ class _ScreenCommunityState extends State<ScreenCommunity> with TickerProviderSt
                 alignment: Alignment.topCenter,
                   child: Padding(
                     padding: EdgeInsets.only(left: px(15), right: px(15)),
-                    child: const AdaptiveColumns(
+                    child: const AdaptiveListViews(
                       chilren: [
-                        UserPostCard(imageUrl: 'assets/images/dish_yxqz.png', index: 1),
-                        UserPostCard(imageUrl: 'assets/images/foodStory.png', index: 2),
-                        UserPostCard(imageUrl: 'assets/images/foodStory.png', index: 3),
-                        UserPostCard(imageUrl: 'assets/images/foodStory.png', index: 4),
-                        UserPostCard(imageUrl: 'assets/images/foodStory.png', index: 5),
-                        UserPostCard(imageUrl: 'assets/images/test_shou.jpg', index: 6),
-                        UserPostCard(imageUrl: 'assets/images/foodStory.png', index: 7),
-                        UserPostCard(imageUrl: 'assets/images/foodStory.png', index: 8),
-                        UserPostCard(imageUrl: 'assets/images/foodStory.png', index: 9),
-                        UserPostCard(imageUrl: 'assets/images/foodStory.png', index: 10),
-                        UserPostCard(imageUrl: 'assets/images/foodStory.png', index: 11),
-                        UserPostCard(imageUrl: 'assets/images/foodStory.png', index: 12),
-                        UserPostCard(imageUrl: 'assets/images/foodStory.png', index: 13),
-                        UserPostCard(imageUrl: 'assets/images/foodStory.png', index: 14),
-                        UserPostCard(imageUrl: 'assets/images/foodStory.png', index: 15),
-                        UserPostCard(imageUrl: 'assets/images/foodStory.png', index: 16),
-                        UserPostCard(imageUrl: 'assets/images/foodStory.png', index: 17),
+                        UserPostCard(imageUrl: 'assets/images/dish_yxqz.png', avatarUrl: '', title: '鱼香茄子', likeCount: 12, userName: '绝绝子',),
+                        UserPostCard(imageUrl: 'assets/images/foodStory.png', avatarUrl: '', title: '鱼香茄子', likeCount: 12, userName: '绝绝子',),
+                        UserPostCard(imageUrl: 'assets/images/foodStory.png', avatarUrl: '', title: '鱼香茄子', likeCount: 12, userName: '绝绝子',),
+                        UserPostCard(imageUrl: 'assets/images/foodStory.png', avatarUrl: '', title: '鱼香茄子', likeCount: 12, userName: '绝绝子',),
+                        UserPostCard(imageUrl: 'assets/images/foodStory.png', avatarUrl: '', title: '鱼香茄子', likeCount: 12, userName: '绝绝子',),
+                        UserPostCard(imageUrl: 'assets/images/test_shou.jpg', avatarUrl: '', title: '鱼香茄子', likeCount: 12, userName: '绝绝子',),
+                        UserPostCard(imageUrl: 'assets/images/foodStory.png', avatarUrl: '', title: '鱼香茄子', likeCount: 12, userName: '绝绝子',),
+                        UserPostCard(imageUrl: 'assets/images/foodStory.png', avatarUrl: '', title: '鱼香茄子', likeCount: 12, userName: '绝绝子',),
+                        UserPostCard(imageUrl: 'assets/images/foodStory.png', avatarUrl: '', title: '鱼香茄子', likeCount: 12, userName: '绝绝子',),
+                        UserPostCard(imageUrl: 'assets/images/foodStory.png', avatarUrl: '', title: '鱼香茄子', likeCount: 12, userName: '绝绝子',),
+                        UserPostCard(imageUrl: 'assets/images/foodStory.png', avatarUrl: '', title: '鱼香茄子', likeCount: 12, userName: '绝绝子',),
+                        UserPostCard(imageUrl: 'assets/images/foodStory.png', avatarUrl: '', title: '鱼香茄子', likeCount: 12, userName: '绝绝子',),
+                        UserPostCard(imageUrl: 'assets/images/foodStory.png', avatarUrl: '', title: '鱼香茄子', likeCount: 12, userName: '绝绝子',),
+                        UserPostCard(imageUrl: 'assets/images/foodStory.png', avatarUrl: '', title: '鱼香茄子', likeCount: 12, userName: '绝绝子',),
+                        UserPostCard(imageUrl: 'assets/images/foodStory.png', avatarUrl: '', title: '鱼香茄子', likeCount: 12, userName: '绝绝子',),
+                        UserPostCard(imageUrl: 'assets/images/foodStory.png', avatarUrl: '', title: '鱼香茄子', likeCount: 12, userName: '绝绝子',),
+                        UserPostCard(imageUrl: 'assets/images/foodStory.png', avatarUrl: '', title: '鱼香茄子', likeCount: 12, userName: '绝绝子',),
                       ]
                     ),
                   )
