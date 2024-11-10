@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:sfss/enums/solar_term_enums.dart';
 import 'package:sfss/pages/home/screens/community/user_post_card.dart';
+import 'package:sfss/pages/home/screens/home/popular_topics.dart';
 import 'package:sfss/pages/home/screens/home/record_overview.dart';
 import 'package:sfss/pages/home/screens/home/diet_progress.dart';
+import 'package:sfss/pages/home/screens/home/today_food_info.dart';
 import 'package:sfss/plugins/adapter.dart';
 import 'package:sfss/widgets/heatmap_calendar.dart';
 import 'package:sfss/widgets/sfss_widget.dart';
@@ -110,7 +113,18 @@ class _ScreenHomeState extends State<ScreenHome> with TickerProviderStateMixin {
                       ),
                     ),
                     SizedBox(height: pxh(26)),
-                    
+                    SizedBox(
+                      width: px(309),
+                      height: px(114),
+                      child: TodayFoodInfo(solarTermIndex: SolarTerm.daxue.index,)
+                    ),
+                    SizedBox(height: pxh(20)),
+                    SizedBox(
+                      width: px(306),
+                      height: px(199),
+                      child: PopularTopics(),
+                    ),
+                    SizedBox(height: 100),
                   ],
                 ),
               ],

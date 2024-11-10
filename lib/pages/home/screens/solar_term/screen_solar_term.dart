@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:sfss/pages/home/screens/community/user_post_card.dart';
-import 'package:sfss/pages/home/screens/home/record_overview.dart';
-import 'package:sfss/pages/home/wigets/diet_progress.dart';
 import 'package:sfss/plugins/adapter.dart';
 import 'package:sfss/widgets/heatmap_calendar.dart';
 import 'package:sfss/widgets/sfss_widget.dart';
@@ -86,16 +83,11 @@ class _ScreenSolarTermState extends State<ScreenSolarTerm> with TickerProviderSt
   Widget build(BuildContext context) {
     Adapter(context: context);
     return CupertinoPageScaffold(
-      child: AnimatedBuilder(
-        animation: animController,
-        builder: (context, child) {
-          return Stack(
-            children: [
-              layerBackground(),
-              layerSheet(),
-            ],
-          );
-        },
+      child: Stack(
+        children: [
+          layerBackground(),
+          layerSheet(),
+        ],
       ),
     );
   }

@@ -74,7 +74,7 @@ class SfssWidget{
       ),
     );
   }
-  static Widget card({double ?height, double ?width, bool ?isFrosted, Widget ?child}) {
+  static Widget card({double ?height, double ?width, bool ?isFrosted, Widget ?child, List<Color> ?colors}) {
     return Container(
       height: height,
       width: width,
@@ -85,10 +85,10 @@ class SfssWidget{
           scale: 0.7,
           repeat: ImageRepeat.repeat,
         ):null,
-        gradient: const RadialGradient(
-          center: Alignment(-0.77, 0.52),
+        gradient: RadialGradient(
+          center: const Alignment(-0.77, 0.52),
           radius: 1.76,
-          colors: [
+          colors: colors??[
             Color(0xFF7A1515),
             Color(0xFF934141),
             Color(0xFF9D5353)
