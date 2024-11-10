@@ -2,9 +2,13 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:sfss/data/sfss_data.dart';
+import 'package:sfss/enums/solar_term_enums.dart';
 import 'package:sfss/pages/home/screens/solar_term/badge_display.dart';
 import 'package:sfss/plugins/adapter.dart';
 import 'package:sfss/styles/sfss_style.dart';
+import 'package:sfss/widgets/adaptive_columns.dart';
 import 'package:sfss/widgets/adaptive_list_views.dart';
 import 'package:sfss/widgets/sfss_widget.dart';
 import 'package:sfss/widgets/solar_term_badge.dart';
@@ -19,6 +23,9 @@ class ScreenSolarTerm extends StatefulWidget {
 
 class _ScreenSolarTermState extends State<ScreenSolarTerm> with TickerProviderStateMixin {
   int index = 0;
+  int solarTermIndex = 0;
+  bool isShowAll = true;
+  List<bool> selectSolorTerms = List.generate(24, (index) => false);
   late AnimationController loadAnimController;
   late Animation<double> Function(double, double) f;
   late List<Animation<double>> slideOffsets;
@@ -132,6 +139,7 @@ class _ScreenSolarTermState extends State<ScreenSolarTerm> with TickerProviderSt
     );
   }
   Widget layerSheet() {
+    isShowAll = selectSolorTerms.every((element) => !element);
     return Align(
       alignment: Alignment.bottomCenter,
       child: Container(
@@ -150,7 +158,9 @@ class _ScreenSolarTermState extends State<ScreenSolarTerm> with TickerProviderSt
               names: const ['徽章','笔记'], 
               // contents: [],
               onTap: (i) {
-                index = i;
+                setState(() {
+                  index = i;
+                });
               },
             ),
             Expanded(
@@ -158,24 +168,239 @@ class _ScreenSolarTermState extends State<ScreenSolarTerm> with TickerProviderSt
                 context: context,
                 removeTop: true, //去除顶部的空白
                 child: Padding(
-                  padding: EdgeInsets.only(left: px(40), right: px(40)),
-                  child: AdaptiveListViews(
-                    maxWidth: 80,
-                    minWidth: 80,
-                    spacingW: px(20),
-                    spacingH: px(23),
-                    chilren: [
-                      for (int i = 0; i < 24; i +=1)...[
-                        slideAnimater(
-                          index: i,
-                          child: SizedBox(
-                            width: px(100),
-                            child: BadgeDisplay(index: i,current: (2*i+i*i+i~/3+i*i*i)%51,total: 50,)
+                  padding: EdgeInsets.only(left: px(20), right: px(20)),
+                  child: [
+                    AdaptiveListViews(
+                      maxWidth: 80,
+                      minWidth: 80,
+                      spacingW: px(20),
+                      spacingH: px(23),
+                      children: [
+                        for (int i = 0; i < 24; i +=1)...[
+                          slideAnimater(
+                            index: i,
+                            child: SizedBox(
+                              width: px(100),
+                              child: BadgeDisplay(index: i,current: (2*i+i*i+i~/3+i*i*i)%51,total: 50,)
+                            ),
                           ),
+                        ]
+                      ],
+                    ),
+                    Column(
+                      children: [
+                        Stack(
+                          children: [
+                            Align(
+                              alignment: Alignment.topCenter,
+                              child: SfssWidget.text(
+                                '立冬',
+                                fontSize: px(24, maxScale: 1.5)
+                              ),
+                            ),
+                            Align(
+                              alignment: const Alignment(0.8, -1.0),
+                              child: GestureDetector(
+                                onTap: (){
+                                  showCupertinoModalPopup(context: context, 
+                                    builder: (context){
+                                      return GestureDetector(
+                                        onVerticalDragUpdate: (details) {
+                                          if(details.delta.distance > 20) {
+                                            Navigator.of(context).pop();
+                                          }
+                                        },
+                                        child: Container(
+                                          height: px(484),
+                                          width: double.infinity,
+                                          decoration: BoxDecoration(
+                                            color: Colors.white,
+                                            borderRadius: BorderRadius.only(
+                                              topLeft: Radius.circular(23),
+                                              topRight: Radius.circular(23),
+                                            ),
+                                          ),
+                                          child: Column(
+                                            children: [
+                                              SizedBox(height: px(34),),
+                                              Container(
+                                                width: px(50),
+                                                height: px(4),
+                                                decoration: BoxDecoration(
+                                                  color: Color(0xFFD9D9D9),
+                                                  borderRadius: BorderRadius.circular(px(4))
+                                                ),
+                                              ),
+                                              SizedBox(height: px(19),),
+                                              SfssWidget.text(
+                                                '类型选择',
+                                                fontSize: px(20, maxScale: 1.5)
+                                              ),
+                                              SizedBox(height: px(12),),
+                                              Container(
+                                                height: 0.53,
+                                                width: px(261),
+                                                color: Color(0xFFC4C6CB),
+                                              ),
+                                              SizedBox(height: px(36),),
+                                              Padding(
+                                                padding: EdgeInsets.only(left: px(35), right: px(35)),
+                                                child: Row(
+                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                  children: [
+                                                    for(int i = 0; i < 4; i ++)
+                                                    Column(
+                                                      children: [
+                                                        for (int j = 0; j < 6; j ++)
+                                                        StatefulBuilder(
+                                                          builder: (context, setStateChild)=>GestureDetector(
+                                                            onTap: (){
+                                                              print(i+j*4);
+                                                              setState(() {
+                                                                setStateChild(() {
+                                                                  selectSolorTerms[i+j*4] = !selectSolorTerms[i+j*4];
+                                                                });
+                                                              });
+                                                            },
+                                                            child: Padding(
+                                                              padding: EdgeInsets.only(bottom: px(21.4)),
+                                                              child: Container(
+                                                                width: px(76),
+                                                                height: px(28),
+                                                                decoration: BoxDecoration(
+                                                                  color: selectSolorTerms[i+j*4]?SfssStyle.solarTermColors[i+j*4][2]:Color(0xFFFBFAFA),
+                                                                  borderRadius: BorderRadius.circular(px(8)),
+                                                                ),
+                                                                child: Center(
+                                                                  child: SfssWidget.text(
+                                                                    solarTermName[i+j*4],
+                                                                    fontSize: px(16),
+                                                                    color: selectSolorTerms[i+j*4]?Colors.white:null
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        )
+                                                      ],
+                                                    )
+                                                  ]
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      );
+                                    }
+                                  );
+                                },
+                                child: Container(
+                                  width: px(68.5, maxScale: 1.5),
+                                  height: px(25, maxScale: 1.5),
+                                  decoration: BoxDecoration(
+                                    color: const Color(0xFFFBFAFA),
+                                    borderRadius: BorderRadius.circular(px(25, maxScale: 1.5)),
+                                  ),
+                                  child: Row(
+                                    children: [
+                                      SizedBox(width: px(16, maxScale: 1.5)),
+                                      SfssWidget.text(
+                                        '节气',
+                                        fontSize: px(15, maxScale: 1.5)
+                                      ),
+                                      SizedBox(width: px(8, maxScale: 1.5),),
+                                      SvgPicture.asset(
+                                        'assets/images/arrow_down.svg',
+                                        width: px(9.5, maxScale: 1.5),
+                                        height: px(5.28, maxScale: 1.5),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            )
+                          ],
                         ),
-                      ]
-                    ],
-                  ),
+                        
+                        SizedBox(height: pxh(28),),
+                        Expanded(
+                          child: AdaptiveListViews(
+                            maxWidth: 150,
+                            minWidth: 150,
+                            children: [
+                            for(int i = 0; i < 24; i += 1)
+                              if(selectSolorTerms[i] || isShowAll == true)
+                              for (int j = 0; j < SfssData.testData[i].length; j += 1)
+                              SfssWidget.card(
+                                width: px(100),
+                                
+                                colors: SfssStyle.solarTermColors[i],
+                                child: Column(
+                                  children: [
+                                    Padding(
+                                      padding: EdgeInsets.only(top: px(23.0, maxScale: 1)),
+                                      child: SfssWidget.text(
+                                        SfssData.testData[i][j]['name'].toString(),
+                                        fontSize: px(24, maxScale: 1.5),
+                                        color: Colors.white
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: EdgeInsets.only(top: px(0.0, maxScale: 1), left: px(20, maxScale: 1), right: px(20, maxScale: 1), bottom: px(22, maxScale: 1)),
+                                      child: SfssWidget.text(
+                                        SfssData.testData[i][j]['desc'].toString(),
+                                        fontSize: px(10, maxScale: 1.5),
+                                        color: Colors.white,
+                                        maxLines: 2,
+                                        overflow: TextOverflow.ellipsis,
+                                        strutStyle: StrutStyle(
+                                          height: 2
+                                        ),
+                                        textAlign: TextAlign.center
+                                      ),
+                                    ),
+                                  ]
+                                )
+                              )
+                              // else
+                              // for (int i = 0; i < SfssData.testData[solarTermIndex].length; i += 1)
+                              //   SfssWidget.card(
+                              //     width: px(100),
+                                  
+                              //     colors: SfssStyle.solarTermColors[solarTermIndex],
+                              //     child: Column(
+                              //       children: [
+                              //         Padding(
+                              //           padding: EdgeInsets.only(top: px(23.0, maxScale: 1)),
+                              //           child: SfssWidget.text(
+                              //             SfssData.testData[solarTermIndex][i]['name'].toString(),
+                              //             fontSize: px(24, maxScale: 1.5),
+                              //             color: Colors.white
+                              //           ),
+                              //         ),
+                              //         Padding(
+                              //           padding: EdgeInsets.only(top: px(0.0, maxScale: 1), left: px(20, maxScale: 1), right: px(20, maxScale: 1), bottom: px(22, maxScale: 1)),
+                              //           child: SfssWidget.text(
+                              //             SfssData.testData[solarTermIndex][i]['desc'].toString(),
+                              //             fontSize: px(10, maxScale: 1.5),
+                              //             color: Colors.white,
+                              //             maxLines: 2,
+                              //             overflow: TextOverflow.ellipsis,
+                              //             strutStyle: StrutStyle(
+                              //               height: 2
+                              //             ),
+                              //             textAlign: TextAlign.center
+                              //           ),
+                              //         ),
+                              //       ]
+                              //     )
+                              //   )
+                            ]
+                          ),
+                        )
+                      ],
+                    )
+                  ][index]
                 ),
               ),
             ),

@@ -170,7 +170,7 @@ class _ScreenCommunityState extends State<ScreenCommunity> with TickerProviderSt
                   child: Padding(
                     padding: EdgeInsets.only(left: px(15), right: px(15)),
                     child: const AdaptiveListViews(
-                      chilren: [
+                      children: [
                         UserPostCard(imageUrl: 'assets/images/dish_yxqz.png', avatarUrl: '', title: '鱼香茄子', likeCount: 12, userName: '绝绝子',),
                         UserPostCard(imageUrl: 'assets/images/foodStory.png', avatarUrl: '', title: '鱼香茄子', likeCount: 12, userName: '绝绝子',),
                         UserPostCard(imageUrl: 'assets/images/foodStory.png', avatarUrl: '', title: '鱼香茄子', likeCount: 12, userName: '绝绝子',),

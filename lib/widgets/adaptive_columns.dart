@@ -9,9 +9,9 @@ class AdaptiveColumns extends StatefulWidget {
   final double maxWidth;
   final double spacingW;
   final double spacingH;
-  final List<Widget> chilren;
+  final List<Widget> children;
 
-  const AdaptiveColumns({super.key, required this.chilren, this.minWidth = 150, this.maxWidth = 200, this.spacingW = 8, this.spacingH = 18});
+  const AdaptiveColumns({super.key, required this.children, this.minWidth = 150, this.maxWidth = 200, this.spacingW = 8, this.spacingH = 18});
   @override
   State<AdaptiveColumns> createState() => _AdaptiveColumnsState();
 }
@@ -63,11 +63,11 @@ class _AdaptiveColumnsState extends State<AdaptiveColumns> {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          for (int itemIndex = 0; itemIndex < ((widget.chilren.length)/columnsNum).ceil()+1; itemIndex+=1)
-                          if(itemIndex*columnsNum+columnIndex < widget.chilren.length)
+                          for (int itemIndex = 0; itemIndex < ((widget.children.length)/columnsNum).ceil()+1; itemIndex+=1)
+                          if(itemIndex*columnsNum+columnIndex < widget.children.length)
                             Padding(
                               padding: (itemIndex==0?const EdgeInsets.all(0.0):EdgeInsets.only(top: widget.spacingH)),
-                              child: widget.chilren[(itemIndex*columnsNum+columnIndex).toInt()],
+                              child: widget.children[(itemIndex*columnsNum+columnIndex).toInt()],
                             )
                           
                         ]

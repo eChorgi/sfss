@@ -9,9 +9,9 @@ class AdaptiveListViews extends StatefulWidget {
   final double maxWidth;
   final double spacingW;
   final double spacingH;
-  final List<Widget> chilren;
+  final List<Widget> children;
 
-  const AdaptiveListViews({super.key, required this.chilren, this.minWidth = 150, this.maxWidth = 200, this.spacingW = 8, this.spacingH = 18});
+  const AdaptiveListViews({super.key, required this.children, this.minWidth = 150, this.maxWidth = 200, this.spacingW = 8, this.spacingH = 18});
   @override
   State<AdaptiveListViews> createState() => _AdaptiveListViewsState();
 }
@@ -62,12 +62,12 @@ class _AdaptiveListViewsState extends State<AdaptiveListViews> {
                       removeTop: true,
                       child: ListView.builder(
                         controller: controllers[columnIndex],
-                        itemCount: ((widget.chilren.length)/columnsNum).ceil()+1,
+                        itemCount: ((widget.children.length)/columnsNum).ceil()+1,
                         itemBuilder: (context, itemIndex){
-                          if(itemIndex*columnsNum+columnIndex < widget.chilren.length){
+                          if(itemIndex*columnsNum+columnIndex < widget.children.length){
                             return Padding(
                               padding: (itemIndex==0?const EdgeInsets.all(0.0):EdgeInsets.only(top: widget.spacingH)),
-                              child: widget.chilren[(itemIndex*columnsNum+columnIndex).toInt()],
+                              child: widget.children[(itemIndex*columnsNum+columnIndex).toInt()],
                             );
                           }
                           else {

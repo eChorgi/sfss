@@ -7,7 +7,7 @@ import 'package:sfss/styles/sfss_style.dart';
 
 class SfssWidget{
 
-  static Widget text(String content, {Color ?color, double ?fontSize, String? fontFamily, TextAlign ?textAlign, TextOverflow ?overflow, int ?maxLines, TextDecoration ?decoration}) {
+  static Widget text(String content, {StrutStyle ?strutStyle,Color ?color, double ?fontSize, String? fontFamily, TextAlign ?textAlign, TextOverflow ?overflow, int ?maxLines, TextDecoration ?decoration}) {
     return Text(
       content,
       style: TextStyle(
@@ -17,6 +17,8 @@ class SfssWidget{
       ),
       maxLines: maxLines,
       overflow: overflow,
+      strutStyle: strutStyle,
+      textAlign: textAlign,
     );
   }
   static Widget button({ required String text, Decoration ?decoration, double ?fontSize, TextStyle ? textStyle, EdgeInsetsGeometry ?padding, Color ?color, Color ?borderColor, double ? borderWidth, CupertinoDynamicColor ?disabledColor, double ?minSize, double ?pressedOpacity, BorderRadius ?borderRadius, Alignment ?alignment, Color ?focusColor, FocusNode ?focusNode, void Function(bool) ?onFocusChange, bool ?autofocus,  required void Function()? onPressed}) {
