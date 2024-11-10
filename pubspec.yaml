@@ -71,7 +71,7 @@ flutter:
   assets:
     - assets/images/
     - assets/images/season/
-    - assets/images/food/
+    - assets/images/foods/
     - assets/images/welcome/
     - assets/images/badge/
     - assets/images/home/
