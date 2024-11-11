@@ -9,7 +9,6 @@ import 'package:sfss/enums/solar_term_enums.dart';
 import 'package:sfss/pages/home/page_home.dart';
 import 'package:sfss/plugins/adapter.dart';
 import 'package:sfss/styles/sfss_style.dart';
-import 'package:sfss/utils/sfss_utils.dart';
 import 'package:sfss/widgets/no_animation_page_roughter.dart';
 import 'package:sfss/widgets/sfss_widget.dart';
 

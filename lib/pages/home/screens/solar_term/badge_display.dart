@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:sfss/enums/solar_term_enums.dart';
 import 'package:sfss/plugins/widget_adapter.dart';
+import 'package:sfss/utils/animation_helper.dart';
 import 'package:sfss/widgets/adaptive_widget.dart';
 import 'package:sfss/widgets/sfss_widget.dart';
 import 'package:sfss/widgets/solar_term_badge.dart';
@@ -16,7 +17,8 @@ class BadgeDisplay extends StatefulWidget {
   State<BadgeDisplay> createState() => _BadgeDisplayState();
 }
 
-class _BadgeDisplayState extends State<BadgeDisplay> {
+class _BadgeDisplayState extends State<BadgeDisplay> with TickerProviderStateMixin {
+  
   @override
   Widget build(BuildContext context) {
     return AdaptiveWidget(uiWidth: 85, uiHeight: 130, 

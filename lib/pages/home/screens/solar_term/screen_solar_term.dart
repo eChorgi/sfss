@@ -6,6 +6,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:sfss/data/sfss_data.dart';
 import 'package:sfss/enums/solar_term_enums.dart';
 import 'package:sfss/pages/home/screens/solar_term/badge_display.dart';
+import 'package:sfss/pages/home/screens/solar_term/food_card.dart';
 import 'package:sfss/plugins/adapter.dart';
 import 'package:sfss/styles/sfss_style.dart';
 import 'package:sfss/widgets/adaptive_columns.dart';
@@ -25,6 +26,9 @@ class _ScreenSolarTermState extends State<ScreenSolarTerm> with TickerProviderSt
   int index = 0;
   int solarTermIndex = 0;
   bool isShowAll = true;
+  List<bool> isCardShown = [];
+  int cnt = 0;
+  List<int> sumOfData = [];
   List<bool> selectSolorTerms = List.generate(24, (index) => false);
   late AnimationController loadAnimController;
   late Animation<double> Function(double, double) f;
@@ -38,7 +42,11 @@ class _ScreenSolarTermState extends State<ScreenSolarTerm> with TickerProviderSt
 
   @override
   void initState() {
-
+    sumOfData.add(0);
+    for (int i = 1; i <= 24; i ++) {
+      sumOfData.add(sumOfData[i-1]+SfssData.testData[i-1].length);
+    }
+    isCardShown = List.generate(sumOfData[24], (index) => false);
     super.initState();
     loadAnimController = AnimationController(
       duration: const Duration(milliseconds: 3000),
@@ -155,7 +163,7 @@ class _ScreenSolarTermState extends State<ScreenSolarTerm> with TickerProviderSt
         child: Column(
           children: [
             TopToggle(
-              names: const ['徽章','笔记'], 
+              names: const ['徽章','卡片'], 
               // contents: [],
               onTap: (i) {
                 setState(() {
@@ -331,37 +339,24 @@ class _ScreenSolarTermState extends State<ScreenSolarTerm> with TickerProviderSt
                             for(int i = 0; i < 24; i += 1)
                               if(selectSolorTerms[i] || isShowAll == true)
                               for (int j = 0; j < SfssData.testData[i].length; j += 1)
-                              SfssWidget.card(
-                                width: px(100),
-                                
-                                colors: SfssStyle.solarTermColors[i],
-                                child: Column(
-                                  children: [
-                                    Padding(
-                                      padding: EdgeInsets.only(top: px(23.0, maxScale: 1)),
-                                      child: SfssWidget.text(
-                                        SfssData.testData[i][j]['name'].toString(),
-                                        fontSize: px(24, maxScale: 1.5),
-                                        color: Colors.white
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsets.only(top: px(0.0, maxScale: 1), left: px(20, maxScale: 1), right: px(20, maxScale: 1), bottom: px(22, maxScale: 1)),
-                                      child: SfssWidget.text(
-                                        SfssData.testData[i][j]['desc'].toString(),
-                                        fontSize: px(10, maxScale: 1.5),
-                                        color: Colors.white,
-                                        maxLines: 2,
-                                        overflow: TextOverflow.ellipsis,
-                                        strutStyle: StrutStyle(
-                                          height: 2
-                                        ),
-                                        textAlign: TextAlign.center
-                                      ),
-                                    ),
-                                  ]
-                                )
+                              Builder(
+                                builder: (context) {
+                                  var id = sumOfData[i]+j;
+                                  return FoodCard(
+                                    id: id,
+                                    name: SfssData.testData[i][j]['name'].toString(), 
+                                    desc: SfssData.testData[i][j]['desc'].toString(), 
+                                    solarTermIndex: i,
+                                    onAnim: (id) {
+                                      isCardShown[id] = true;
+                                    },
+                                    judgeAnimationEnable: (id){
+                                      return !isCardShown[id];
+                                    },
+                                  );
+                                }
                               )
+                              
                               // else
                               // for (int i = 0; i < SfssData.testData[solarTermIndex].length; i += 1)
                               //   SfssWidget.card(
