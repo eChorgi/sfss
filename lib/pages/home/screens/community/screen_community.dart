@@ -77,7 +77,7 @@ class _ScreenCommunityState extends State<ScreenCommunity> with TickerProviderSt
           height: pxh(760)-px(30, extraHScale: -1.2),
           width: double.infinity,
           decoration: const BoxDecoration(
-            color: Colors.white,  
+            color: Color(0xFFF8F8F8),  
             borderRadius: BorderRadius.only(
               topLeft: Radius.circular(22),
               topRight: Radius.circular(22),
@@ -169,30 +169,26 @@ class _ScreenCommunityState extends State<ScreenCommunity> with TickerProviderSt
               child: Align(
                 alignment: Alignment.topCenter,
                   child: Padding(
-                    padding: EdgeInsets.only(left: px(15), right: px(15)),
-                    child: ListView(
+                    padding: EdgeInsets.only(left: px(10), right: px(10)),
+                    child: AdaptiveListViews(
+                      spacingH: px(10),
                       children: [
-                        AdaptiveColumns(
-                          children: [
-                            UserPostCard(imageUrl: 'assets/images/foods/0.jpg', avatarUrl: '', title: '炒年糕，让人垂涎欲滴的美味', likeCount: 12, userName: '美食达人小张',),
-                            UserPostCard(imageUrl: 'assets/images/foods/1.jpg', avatarUrl: '', title: '午后蛋糕惬意时光', likeCount: 12, userName: '甜品爱好者',),
-                            UserPostCard(imageUrl: 'assets/images/foods/2.jpg', avatarUrl: '', title: '深夜食堂，下雨天自制冰饮和日式拉面更配哦', likeCount: 12, userName: '夜宵达人',),
-                            UserPostCard(imageUrl: 'assets/images/foods/3.jpg', avatarUrl: '', title: '午后沙拉一人食，享受片刻的宁静', likeCount: 12, userName: '孤独美食家',),
-                            UserPostCard(imageUrl: 'assets/images/foods/4.jpg', avatarUrl: '', title: '秋日蟹黄', likeCount: 12, userName: '海鲜探索者',),
-                            UserPostCard(imageUrl: 'assets/images/foods/5.jpg', avatarUrl: '', title: '虾仁番茄拉面', likeCount: 12, userName: '拉面大师',),
-                            UserPostCard(imageUrl: 'assets/images/foods/6.jpg', avatarUrl: '', title: '晨光鸡蛋面，满满幸福感', likeCount: 12, userName: '早餐专家',),
-                            UserPostCard(imageUrl: 'assets/images/foods/7.jpg', avatarUrl: '', title: '炸鸡火鸡面', likeCount: 12, userName: '炸鸡爱好者',),
-                            UserPostCard(imageUrl: 'assets/images/foods/8.jpg', avatarUrl: '', title: '精致日式午餐', likeCount: 12, userName: '日式美食家',),
-                            UserPostCard(imageUrl: 'assets/images/foods/9.jpg', avatarUrl: '', title: '牛排意面，再冲一包挂耳咖啡', likeCount: 12, userName: '西餐爱好者',),
-                            UserPostCard(imageUrl: 'assets/images/foods/10.jpg', avatarUrl: '', title: '在家自制鸡公煲，不输饭店', likeCount: 12, userName: '水果达人',),
-                            UserPostCard(imageUrl: 'assets/images/foods/11.jpg', avatarUrl: '', title: '小蛋糕治愈一切', likeCount: 12, userName: '甜点大师',),
-                            UserPostCard(imageUrl: 'assets/images/foods/12.jpg', avatarUrl: '', title: '麦门！', likeCount: 12, userName: '快餐迷',),
-                            UserPostCard(imageUrl: 'assets/images/foods/13.jpg', avatarUrl: '', title: '大口汉堡', likeCount: 12, userName: '汉堡控',),
-                            UserPostCard(imageUrl: 'assets/images/foods/14.jpg', avatarUrl: '', title: '鸡蛋炒面', likeCount: 12, userName: '炒面高手',),
-                            UserPostCard(imageUrl: 'assets/images/foods/15.jpg', avatarUrl: '', title: '芋圆西米露，香甜顺滑', likeCount: 12, userName: '甜品探索者',),
-                            UserPostCard(imageUrl: 'assets/images/foods/16.jpg', avatarUrl: '', title: '风情意大利面', likeCount: 12, userName: '意面爱好者',)
-                          ],
-                        ),
+                        UserPostCard(imageUrl: 'assets/images/foods/0.jpg', avatarUrl: 'assets/images/foods/0.jpg', title: '炒年糕，让人垂涎欲滴的美味', likeCount: 12, userName: '美食达人小张',),
+                        UserPostCard(imageUrl: 'assets/images/foods/1.jpg', avatarUrl: 'assets/images/foods/1.jpg', title: '午后蛋糕惬意时光', likeCount: 12, userName: '甜品爱好者',),
+                        UserPostCard(imageUrl: 'assets/images/foods/2.jpg', avatarUrl: 'assets/images/foods/2.jpg', title: '深夜食堂，下雨天自制冰饮和日式拉面更配哦', likeCount: 12, userName: '夜宵达人',),
+                        UserPostCard(imageUrl: 'assets/images/foods/3.jpg', avatarUrl: 'assets/images/foods/3.jpg', title: '午后沙拉一人食，享受片刻的宁静', likeCount: 12, userName: '孤独美食家',),
+                        UserPostCard(imageUrl: 'assets/images/foods/4.jpg', avatarUrl: 'assets/images/foods/4.jpg', title: '秋日蟹黄', likeCount: 12, userName: '海鲜探索者',),
+                        UserPostCard(imageUrl: 'assets/images/foods/5.jpg', avatarUrl: 'assets/images/foods/5.jpg', title: '虾仁番茄拉面', likeCount: 12, userName: '拉面大师',),
+                        UserPostCard(imageUrl: 'assets/images/foods/6.jpg', avatarUrl: 'assets/images/foods/6.jpg', title: '晨光鸡蛋面，满满幸福感', likeCount: 12, userName: '早餐专家',),
+                        UserPostCard(imageUrl: 'assets/images/foods/7.jpg', avatarUrl: 'assets/images/foods/7.jpg', title: '炸鸡火鸡面', likeCount: 12, userName: '炸鸡爱好者',),
+                        UserPostCard(imageUrl: 'assets/images/foods/8.jpg', avatarUrl: 'assets/images/foods/8.jpg', title: '精致日式午餐', likeCount: 12, userName: '日式美食家',),
+                        UserPostCard(imageUrl: 'assets/images/foods/9.jpg', avatarUrl: 'assets/images/foods/9.jpg', title: '牛排意面，再冲一包挂耳咖啡', likeCount: 12, userName: '西餐爱好者',),
+                        UserPostCard(imageUrl: 'assets/images/foods/10.jpg', avatarUrl: 'assets/images/foods/10.jpg', title: '在家自制鸡公煲，不输饭店', likeCount: 12, userName: '水果达人',),
+                        UserPostCard(imageUrl: 'assets/images/foods/11.jpg', avatarUrl: 'assets/images/foods/11.jpg', title: '小蛋糕治愈一切', likeCount: 12, userName: '甜点大师',),
+                        UserPostCard(imageUrl: 'assets/images/foods/12.jpg', avatarUrl: 'assets/images/foods/12.jpg', title: '麦门！', likeCount: 12, userName: '快餐迷',),
+                        UserPostCard(imageUrl: 'assets/images/foods/13.jpg', avatarUrl: 'assets/images/foods/13.jpg', title: '大口汉堡', likeCount: 12, userName: '汉堡控',),
+                        UserPostCard(imageUrl: 'assets/images/foods/14.jpg', avatarUrl: 'assets/images/foods/14.jpg', title: '鸡蛋炒面', likeCount: 12, userName: '炒面高手',),
+                        UserPostCard(imageUrl: 'assets/images/foods/15.jpg', avatarUrl: 'assets/images/foods/15.jpg', title: '芋圆西米露，香甜顺滑', likeCount: 12, userName: '甜品探索者',),
                       ],
                     ),
                   )

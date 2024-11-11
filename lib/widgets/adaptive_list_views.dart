@@ -60,20 +60,23 @@ class _AdaptiveListViewsState extends State<AdaptiveListViews> {
                     child: MediaQuery.removePadding(
                       context: context,
                       removeTop: true,
-                      child: ListView.builder(
-                        controller: controllers[columnIndex],
-                        itemCount: ((widget.children.length)/columnsNum).ceil()+1,
-                        itemBuilder: (context, itemIndex){
-                          if(itemIndex*columnsNum+columnIndex < widget.children.length){
-                            return Padding(
-                              padding: (itemIndex==0?const EdgeInsets.all(0.0):EdgeInsets.only(top: widget.spacingH)),
-                              child: widget.children[(itemIndex*columnsNum+columnIndex).toInt()],
-                            );
-                          }
-                          else {
-                            return const SizedBox(height: 100,);
-                          }
-                        },
+                      child: ScrollConfiguration(
+                        behavior: ScrollConfiguration.of(context).copyWith(scrollbars: false),
+                        child: ListView.builder(
+                          controller: controllers[columnIndex],
+                          itemCount: ((widget.children.length)/columnsNum).ceil()+1,
+                          itemBuilder: (context, itemIndex){
+                            if(itemIndex*columnsNum+columnIndex < widget.children.length){
+                              return Padding(
+                                padding: (itemIndex==0?const EdgeInsets.all(0.0):EdgeInsets.only(top: widget.spacingH)),
+                                child: widget.children[(itemIndex*columnsNum+columnIndex).toInt()],
+                              );
+                            }
+                            else {
+                              return const SizedBox(height: 100,);
+                            }
+                          },
+                        ),
                       ),
                     ),
                   ),

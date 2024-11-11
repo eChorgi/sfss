@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:sfss/pages/detail/pageDetail.dart';
+import 'package:sfss/__old/detail/pageDetail.dart';
 import 'package:sfss/styles/sfss_style.dart';
-import 'package:sfss/widgets/navigationBar.dart';
-import 'package:sfss/widgets/smallCardItem.dart';
+import 'package:sfss/__old/navigationBar.dart';
+import 'package:sfss/__old/smallCardItem.dart';
 
 
 Widget _vegetableItem(String name, String discribe, List<String> dishes, List<String> dishes_desc, BuildContext context, int ?index) {

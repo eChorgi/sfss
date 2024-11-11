@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:sfss/styles/sfss_style.dart';
-import 'package:sfss/widgets/collectionHeader.dart';
-import 'package:sfss/widgets/smallCardItem.dart';
+import 'package:sfss/__old/collectionHeader.dart';
+import 'package:sfss/__old/smallCardItem.dart';
 
 Widget _collectionItem({
   required String name, 

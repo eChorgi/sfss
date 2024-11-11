@@ -21,6 +21,23 @@ class FitWidthImage extends StatefulWidget {
 class _FitWidthImageState extends State<FitWidthImage> {
   late Image image;
   double ?imgW, imgH, displayH, widgetH;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    widget.image.image
+    .resolve(new ImageConfiguration())
+    .addListener(new ImageStreamListener((ImageInfo info, bool _) {
+      if(mounted){
+        setState(() {  
+          imgW = info.image.width.toDouble();
+          imgH = info.image.height.toDouble();
+        });
+      }
+    }));
+  }
+
   @override
   Widget build(BuildContext context) {
     widget.image.image
@@ -38,6 +55,7 @@ class _FitWidthImageState extends State<FitWidthImage> {
         if(imgW == null || imgH == null) return const SizedBox();
         
         displayH = imgH!*boxConstraints.maxWidth/imgW!;
+        widgetH = displayH;
         if(displayH! > 4.0/3.0*boxConstraints.maxWidth){
           widgetH = 4.0/3.0*boxConstraints.maxWidth;
         }
@@ -51,7 +69,7 @@ class _FitWidthImageState extends State<FitWidthImage> {
               child: Align(
                 alignment: Alignment.center,
                 heightFactor: (widgetH??1)/(displayH??1),
-                child: widgetH==null?const SizedBox():widget.image,
+                child: widget.image,
               ),
             ),
           ],

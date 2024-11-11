@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:sfss/roughter.dart';
+import 'package:sfss/config/roughter.dart';
 
 
 void main() {

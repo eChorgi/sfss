@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sfss/styles/sfss_style.dart';
-import 'package:sfss/widgets/navigationBar.dart';
+import 'package:sfss/__old/navigationBar.dart';
 
 Widget _historyDayCard({
   List<Widget> children = const [],

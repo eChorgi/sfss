@@ -7,7 +7,7 @@ import 'package:sfss/pages/home/screens/recommend.dart';
 import 'package:sfss/pages/home/screens/today.dart';
 import 'package:sfss/plugins/adapter.dart';
 import 'package:sfss/styles/sfss_style.dart';
-import 'package:sfss/widgets/tabBar.dart';
+import 'package:sfss/widgets/tab_bar.dart';
 
 
 class PageHome extends StatefulWidget {

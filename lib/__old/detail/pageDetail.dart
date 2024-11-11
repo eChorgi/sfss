@@ -5,8 +5,8 @@ import 'package:sfss/data/food_data.dart';
 import 'package:sfss/plugins/adapter.dart';
 import 'package:sfss/styles/sfss_style.dart';
 import 'package:sfss/widgets/sfss_widget.dart';
-import 'package:sfss/widgets/navigationBar.dart';
-import 'package:sfss/widgets/collectionHeader.dart';
+import 'package:sfss/__old/navigationBar.dart';
+import 'package:sfss/__old/collectionHeader.dart';
 import 'package:sfss/data/food_data.dart';
 import 'package:flutter_star/flutter_star.dart';
 

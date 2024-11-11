@@ -7,7 +7,7 @@ import 'package:sfss/pages/home/screens/solar_term/screen_solar_term.dart';
 import 'package:sfss/plugins/adapter.dart';
 import 'package:sfss/styles/sfss_style.dart';
 import 'package:sfss/widgets/sfss_widget.dart';
-import 'package:sfss/widgets/tabBar.dart';
+import 'package:sfss/widgets/tab_bar.dart';
 
 class PageHome extends StatefulWidget {
   const PageHome({ Key? key }) : super(key: key);
