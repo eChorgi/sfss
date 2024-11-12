@@ -75,7 +75,7 @@ class _FoodCardState extends State<FoodCard> with TickerProviderStateMixin {
         child: AnimatedBuilder(
           animation: Listenable.merge([controller, controller2]),
           builder: (context, child) => Transform.translate(
-            offset: widget.judgeAnimationEnable(widget.id)?Offset(0, px(randomVal)*(1-offset.value*0.3)*(1-offset2.value)):Offset(0, 0),
+            offset: widget.judgeAnimationEnable(widget.id)?Offset(0, px(randomVal)*(1-offset.value*0.7)*(1-offset2.value)):Offset(0, 0),
             child: SfssWidget.card(
               width: px(100),
               

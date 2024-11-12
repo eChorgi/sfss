@@ -52,56 +52,59 @@ class SfssTabBar extends CupertinoTabBar {
                     //   color: const Color(0xFFC4C6CB),
                     // ),
                     const SizedBox(height: 13),
-                    SizedBox(
-                      width: px(287),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: items.map((item) {
-                          int index = items.indexOf(item);
-                          bool isSelected = index == currentIndex;
-                          return GestureDetectorHitTestWithoutSizeLimit(
+                    Padding(
+                      padding: EdgeInsets.only(left: px(14.0)),
+                      child: SizedBox(
+                        width: px(327),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: items.map((item) {
+                            int index = items.indexOf(item);
+                            bool isSelected = index == currentIndex;
+                            return GestureDetectorHitTestWithoutSizeLimit(
+                              extraHitTestArea: EdgeInsets.all(px(10)),
+                              onTap: () {
+                                if (onTap != null) {
+                                  onTap!(index);
+                                }
+                              },
+                              child: Padding(
+                                padding: EdgeInsets.only(left: itemSpacing / 2, right: itemSpacing / 2),
+                                  child: isSelected?item.activeIcon:item.icon
+                              ),
+                            );
+                            //在中间插入
+                          }).toList()..insert(items.length~/2,
+                            GestureDetectorHitTestWithoutSizeLimit(
                             extraHitTestArea: EdgeInsets.all(px(10)),
                             onTap: () {
                               if (onTap != null) {
-                                onTap!(index);
+                                // onTap!(items.length-1);
+                                onTapRecord!(currentIndex);
                               }
                             },
-                            child: Padding(
-                              padding: EdgeInsets.only(left: itemSpacing / 2, right: itemSpacing / 2),
-                                child: isSelected?item.activeIcon:item.icon
+                            child: Transform(
+                              transform: Matrix4.translationValues(3.6, 0, 0),
+                              child: Container(
+                              width: 40,
+                              height: 40,
+                              decoration: BoxDecoration (
+                                color: SfssStyle.mainRed,
+                                borderRadius: BorderRadius.circular(40)
+                              ),
+                              child: 
+                                Center(
+                                  child: SfssWidget.text(
+                                    '记',
+                                    fontSize: 15,
+                                    color: Colors.white
+                                  ),
+                                )
+                              ),
                             ),
-                          );
-                          //在中间插入
-                        }).toList()..insert(items.length~/2,
-                          GestureDetectorHitTestWithoutSizeLimit(
-                          extraHitTestArea: EdgeInsets.all(px(10)),
-                          onTap: () {
-                            if (onTap != null) {
-                              // onTap!(items.length-1);
-                              onTapRecord!(currentIndex);
-                            }
-                          },
-                          child: Transform(
-                            transform: Matrix4.translationValues(3.6, 0, 0),
-                            child: Container(
-                            width: 40,
-                            height: 40,
-                            decoration: BoxDecoration (
-                              color: SfssStyle.mainRed,
-                              borderRadius: BorderRadius.circular(40)
-                            ),
-                            child: 
-                              Center(
-                                child: SfssWidget.text(
-                                  '记',
-                                  fontSize: 15,
-                                  color: Colors.white
-                                ),
-                              )
-                            ),
-                          ),
-                         )
-                        )
+                           )
+                          )
+                        ),
                       ),
                     ),
                   ],

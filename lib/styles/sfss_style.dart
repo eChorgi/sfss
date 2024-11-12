@@ -11,8 +11,8 @@ class SfssStyle{
   //颜色数组
   static List<List<Color>> badgeLevelColors = [
   [const Color(0xFFD3D3D3),const Color(0xFFD3D3D3),const Color(0xFFD3D3D3)],
-  [const Color(0xFF8BA97B),const Color(0xFF8BA97B),const Color(0xFF8BA97B)],
-  [const Color(0xFFDA9F61),const Color(0xFFDA9F61),const Color(0xFFDA9F61)]
+  [Color(0xFF8FA9C8), Color(0xFFA6B9D9), Color(0xFFBFD3E1)],
+  [Color(0xFFD1C6A4), Color(0xFFDCD4BA), Color(0xFFE9E3D3)]
   ];
   
   static List<List<Color>> solarTermColors = const [

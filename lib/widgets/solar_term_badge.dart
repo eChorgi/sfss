@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:sfss/plugins/adapter.dart';
 import 'package:sfss/plugins/widget_adapter.dart';
@@ -22,47 +24,54 @@ class _SolarTermBadgeState extends State<SolarTermBadge> {
       builder: (context, adapter){
         PxFunction px = adapter.px;
         return Center(
-          child: Container(
-            width: double.infinity,
-            decoration: BoxDecoration(
-              //圆形
-              shape: BoxShape.circle,
-              gradient: RadialGradient(
-                center: const Alignment(-0.77, 0.52),
-                radius: 1.76,
-                colors: SfssStyle.badgeLevelColors[widget.level],
-              ),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.25),
-                  offset: Offset(0, px(4)),
-                  blurRadius: px(20),
-                  spreadRadius: -px(4),
-                )
-              ],
-            ),
-            child: Padding(
-              padding: EdgeInsets.all(px(6.0)),
-              child: Container(
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.25),
-                      offset: Offset(0, px(4)),
-                      blurRadius: px(10),
-                      spreadRadius: -px(9),
-                    )
-                  ],
-                  image: DecorationImage(
-                    image: AssetImage(
-                      'assets/images/badge/badge_${widget.index+1}.png'
-                    )
-                  )
+          child: Stack(
+            children: [
+              ImageFiltered(
+                imageFilter: ImageFilter.blur(sigmaX: 3, sigmaY: 3, tileMode: TileMode.mirror),
+                child: Container(
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    //圆形
+                    shape: BoxShape.circle,
+                    gradient: RadialGradient(
+                      center: const Alignment(-0.77, 0.52),
+                      radius: 1.76,
+                      colors: SfssStyle.badgeLevelColors[widget.level],
+                    ),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.25),
+                        offset: Offset(0, px(4)),
+                        blurRadius: px(20),
+                        spreadRadius: -px(4),
+                      )
+                    ],
+                  ),
                 ),
               ),
-            ),
+              Padding(
+                padding: EdgeInsets.all(px(2.0)),
+                child: Container(
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.25),
+                        offset: Offset(0, px(4)),
+                        blurRadius: px(10),
+                        spreadRadius: -px(9),
+                      )
+                    ],
+                    image: DecorationImage(
+                      image: AssetImage(
+                        'assets/images/badge/badge_${widget.index+1}.png'
+                      )
+                    )
+                  ),
+                ),
+              ),
+            ],
           ),
         );
       }
