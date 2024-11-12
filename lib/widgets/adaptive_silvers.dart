@@ -4,19 +4,19 @@ import 'package:linked_scroll_controller/linked_scroll_controller.dart';
 import 'package:sfss/styles/sfss_style.dart';
 import 'package:sfss/widgets/sfss_widget.dart';
 
-class AdaptiveColumns extends StatefulWidget {
+class AdaptiveSilvers extends StatefulWidget {
   final double minWidth;
   final double maxWidth;
   final double spacingW;
   final double spacingH;
   final List<Widget> children;
 
-  const AdaptiveColumns({super.key, required this.children, this.minWidth = 150, this.maxWidth = 200, this.spacingW = 8, this.spacingH = 18});
+  const AdaptiveSilvers({super.key, required this.children, this.minWidth = 150, this.maxWidth = 200, this.spacingW = 8, this.spacingH = 18});
   @override
-  State<AdaptiveColumns> createState() => _AdaptiveColumnsState();
+  State<AdaptiveSilvers> createState() => _AdaptiveSilversState();
 }
 
-class _AdaptiveColumnsState extends State<AdaptiveColumns> {
+class _AdaptiveSilversState extends State<AdaptiveSilvers> {
 
   late LinkedScrollControllerGroup controllerGroup;
   List<ScrollController> controllers = [];
