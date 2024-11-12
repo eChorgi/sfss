@@ -66,6 +66,7 @@ class _PageHomeState extends State<PageHome> {
   Widget build(BuildContext context) {
     return CupertinoTabScaffold(
       tabBar: SfssTabBar(
+        onTapRecord: (){},
         border: Border(
           top: BorderSide(
             color: const Color(0xFFC4C6CB),

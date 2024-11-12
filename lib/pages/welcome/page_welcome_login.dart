@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'dart:ui';
 
 import 'package:dotlottie_loader/dotlottie_loader.dart';
 import 'package:flutter/cupertino.dart';
@@ -279,7 +280,7 @@ class _PageWelcomeLoginState extends State<PageWelcomeLogin> with TickerProvider
         child: Align(
           alignment: Alignment.bottomCenter,
           child: Hero(
-            tag: 'loginSheetToMainSheet',
+            tag: 'sheet',
             child: Container(
               width: double.infinity,
               height: pxh(625),
@@ -574,11 +575,16 @@ class _PageWelcomeLoginState extends State<PageWelcomeLogin> with TickerProvider
       children: [
         Opacity(
           opacity: bgOpacity.value,
-          child: Container(
-            decoration: const BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage("assets/images/welcome/background.png"),
-                fit: BoxFit.cover,
+          child: ImageFiltered(
+            // imageFilter: ImageFilter.blur(sigmaX: 0, sigmaY: 0),
+            imageFilter: ImageFilter.blur(sigmaX: 1.5, sigmaY: 1.5),
+            // imageFilter: ImageFilter.blur(sigmaX: 22, sigmaY: 50),
+            child: Container(
+              decoration: const BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage("assets/images/welcome/background1.png"),
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
           ),
@@ -609,13 +615,10 @@ class _PageWelcomeLoginState extends State<PageWelcomeLogin> with TickerProvider
       alignment: Alignment(0.0, 1.5),
       child: Hero(
         tag: 'tabBar',
-        child: Opacity(
-          opacity: 1-bgOpacity.value,
-          child: Container(
-            width: double.infinity,
-            height: 70,
-            color: Colors.white,
-          ),
+        child: Container(
+          width: double.infinity,
+          height: 70,
+          color: Colors.white,
         ),
       ),
     );

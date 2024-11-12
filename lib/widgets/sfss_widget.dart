@@ -76,6 +76,7 @@ class SfssWidget{
       ),
     );
   }
+  
   static Widget card({double ?height, double ?width, bool ?isFrosted, Widget ?child, List<Color> ?colors}) {
     return Container(
       height: height,

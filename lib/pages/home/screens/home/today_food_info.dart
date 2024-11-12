@@ -23,11 +23,11 @@ class _TodayFoodInfoState extends State<TodayFoodInfo> {
         PxFunction px = adapter.px;
         return Column(
           children: [
-            SfssWidget.text(
-              '今日可公开时令食物情报',
-              fontSize: px(16)
-            ),
-            SizedBox(height: px(10),),
+            // SfssWidget.text(
+            //   '今日可公开时令食物情报',
+            //   fontSize: px(16)
+            // ),
+            // SizedBox(height: px(10),),
             // for (int i = 0; i < 24; i+=1)
               SfssWidget.card(
                 width: px(308),

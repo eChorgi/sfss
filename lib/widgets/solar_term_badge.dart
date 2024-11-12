@@ -25,15 +25,19 @@ class _SolarTermBadgeState extends State<SolarTermBadge> {
           child: Container(
             width: double.infinity,
             decoration: BoxDecoration(
-              color: SfssStyle.badgeLevelColors[widget.level],
               //圆形
               shape: BoxShape.circle,
+              gradient: RadialGradient(
+                center: const Alignment(-0.77, 0.52),
+                radius: 1.76,
+                colors: SfssStyle.badgeLevelColors[widget.level],
+              ),
               boxShadow: [
                 BoxShadow(
                   color: Colors.black.withOpacity(0.25),
                   offset: Offset(0, px(4)),
-                  blurRadius: px(18),
-                  spreadRadius: -px(9),
+                  blurRadius: px(20),
+                  spreadRadius: -px(4),
                 )
               ],
             ),
@@ -47,7 +51,7 @@ class _SolarTermBadgeState extends State<SolarTermBadge> {
                     BoxShadow(
                       color: Colors.black.withOpacity(0.25),
                       offset: Offset(0, px(4)),
-                      blurRadius: px(18),
+                      blurRadius: px(10),
                       spreadRadius: -px(9),
                     )
                   ],

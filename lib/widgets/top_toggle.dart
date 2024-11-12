@@ -1,3 +1,4 @@
+import 'package:extra_hittest_area/extra_hittest_area.dart';
 import 'package:flutter/material.dart';
 import 'package:sfss/plugins/adapter.dart';
 import 'package:sfss/styles/sfss_style.dart';
@@ -36,7 +37,8 @@ class _TopToggleState extends State<TopToggle> {
                     fontSize: px(20,maxScale:1),
                   ),
                 ),
-                GestureDetector(
+                GestureDetectorHitTestWithoutSizeLimit(
+                  extraHitTestArea: EdgeInsets.all(px(10)),
                   onTap: () {
                     setState(() {
                       index = i;

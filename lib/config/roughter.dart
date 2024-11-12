@@ -4,6 +4,8 @@ export '../__old/register/pageRegister.dart';
 export '../__old/pagePome.dart';
 export '../__old/detail/pageDetail.dart';
 
+import 'package:sfss/pages/page_record_edit/page_record_edit.dart';
+
 import '../__old/login/pageLogin.dart';
 import '../pages/welcome/page_welcome_login.dart';
 import '../__old/register/pageRegister.dart';
@@ -25,4 +27,7 @@ Map<String, Widget Function(BuildContext)> appRoutes = {
   '/home': (context) {
     return const PageHome();
   },
+  '/recordEdit': (context) {
+    return const PageRecordEdit();
+  }
 };

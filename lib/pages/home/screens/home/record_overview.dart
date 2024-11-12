@@ -1,3 +1,4 @@
+import 'package:extra_hittest_area/extra_hittest_area.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:sfss/widgets/adaptive_widget.dart';
@@ -66,7 +67,8 @@ class _RecordOverviewState extends State<RecordOverview> {
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
                           Spacer(flex: 3,),
-                          GestureDetector(
+                          GestureDetectorHitTestWithoutSizeLimit(
+                            extraHitTestArea: EdgeInsets.all(px(20))+EdgeInsets.only(right: px(30), left: px(30)),
                             onTap: () {
                               setState(() {
                                 month = (month+10)%12+1;
@@ -84,7 +86,8 @@ class _RecordOverviewState extends State<RecordOverview> {
                             fontSize: px(20),
                           ),
                           Spacer(flex: 3,),
-                          GestureDetector(
+                          GestureDetectorHitTestWithoutSizeLimit(
+                            extraHitTestArea: EdgeInsets.all(px(20))+EdgeInsets.only(right: px(30), left: px(30)),
                             onTap: () {
                               setState(() {
                                 month = (month)%12+1;
