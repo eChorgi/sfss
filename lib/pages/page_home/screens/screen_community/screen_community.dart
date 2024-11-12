@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:sfss/pages/home/screens/community/user_post_card.dart';
+import 'package:sfss/pages/page_home/screens/screen_community/widgets/user_post_card.dart';
 import 'package:sfss/widgets/adaptive_columns.dart';
 import 'package:sfss/widgets/adaptive_list_views.dart';
-import 'package:sfss/pages/home/screens/home/diet_progress.dart';
+import 'package:sfss/pages/page_home/screens/screen_home/widgets/diet_progress.dart';
 import 'package:sfss/plugins/adapter.dart';
 import 'package:sfss/styles/sfss_style.dart';
 import 'package:sfss/widgets/sfss_widget.dart';

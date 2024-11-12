@@ -51,7 +51,7 @@ class _AdaptiveListViewsState extends State<AdaptiveListViews> {
           controllers.add(controllerGroup.addAndGet());
         }
         return ClipRRect(
-          clipBehavior: Clip.hardEdge,
+          clipBehavior: Clip.antiAlias,
           child: SizedBox(
             width: double.infinity,
             child: Row(

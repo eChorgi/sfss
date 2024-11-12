@@ -4,11 +4,11 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:sfss/enums/solar_term_enums.dart';
-import 'package:sfss/pages/home/screens/community/user_post_card.dart';
-import 'package:sfss/pages/home/screens/home/popular_topics.dart';
-import 'package:sfss/pages/home/screens/home/record_overview.dart';
-import 'package:sfss/pages/home/screens/home/diet_progress.dart';
-import 'package:sfss/pages/home/screens/home/today_food_info.dart';
+import 'package:sfss/pages/page_home/screens/screen_community/widgets/user_post_card.dart';
+import 'package:sfss/pages/page_home/screens/screen_home/widgets/popular_topics.dart';
+import 'package:sfss/pages/page_home/screens/screen_home/widgets/record_overview.dart';
+import 'package:sfss/pages/page_home/screens/screen_home/widgets/diet_progress.dart';
+import 'package:sfss/pages/page_home/screens/screen_home/widgets/today_food_info.dart';
 import 'package:sfss/plugins/adapter.dart';
 import 'package:sfss/styles/sfss_style.dart';
 import 'package:sfss/widgets/adaptive_list_views.dart';
@@ -117,6 +117,7 @@ class _ScreenHomeState extends State<ScreenHome> with TickerProviderStateMixin {
               context: context,
               removeTop: true, //去除顶部的空白
               child: ListView(
+                clipBehavior: Clip.antiAlias,
                 children: [
                   Column(
                     children: [

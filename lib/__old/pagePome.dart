@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-import 'package:sfss/pages/home/screens/collection.dart';
-import 'package:sfss/pages/home/screens/history.dart';
-import 'package:sfss/pages/home/screens/recommend.dart';
-import 'package:sfss/pages/home/screens/today.dart';
+import 'package:sfss/__old/collection.dart';
+import 'package:sfss/__old/history.dart';
+import 'package:sfss/__old/recommend.dart';
+import 'package:sfss/__old/today.dart';
 import 'package:sfss/plugins/adapter.dart';
 import 'package:sfss/styles/sfss_style.dart';
 import 'package:sfss/widgets/tab_bar.dart';

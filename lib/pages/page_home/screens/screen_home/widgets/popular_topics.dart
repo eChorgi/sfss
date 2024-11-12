@@ -85,6 +85,7 @@ class _PopularTopicsState extends State<PopularTopics> {
             SizedBox(
               height: px(169),
               child: ListView(
+                clipBehavior: Clip.antiAlias,
                 scrollDirection : Axis.horizontal,
                 children: [
                   SizedBox(

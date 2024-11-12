@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
-import 'package:sfss/pages/home/screens/community/screen_community.dart';
-import 'package:sfss/pages/home/screens/edit_record/screen_edit_record.dart';
-import 'package:sfss/pages/home/screens/home/screen_home.dart';
-import 'package:sfss/pages/home/screens/home/diet_progress.dart';
-import 'package:sfss/pages/home/screens/solar_term/screen_solar_term.dart';
+import 'package:sfss/pages/page_home/screens/screen_community/screen_community.dart';
+import 'package:sfss/__deprecated/edit_record/screen_edit_record.dart';
+import 'package:sfss/pages/page_home/screens/screen_home/screen_home.dart';
+import 'package:sfss/pages/page_home/screens/screen_home/widgets/diet_progress.dart';
+import 'package:sfss/pages/page_home/screens/screen_history/screen_history.dart';
+import 'package:sfss/pages/page_home/screens/screen_solar_term/screen_solar_term.dart';
 import 'package:sfss/pages/page_record_edit/page_record_edit.dart';
 import 'package:sfss/plugins/adapter.dart';
 import 'package:sfss/styles/sfss_style.dart';
@@ -105,7 +106,7 @@ class _PageHomeState extends State<PageHome> with TickerProviderStateMixin {
                   const ScreenHome(),
                   const ScreenSolarTerm(),
                   const ScreenCommunity(),
-                  const ScreenHome(),
+                  const ScreenHistory(),
                   ScreenEditRecord(onClickBack: (){
                     clickedBack = true;
                     
