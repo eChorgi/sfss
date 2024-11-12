@@ -46,11 +46,11 @@ class SfssTabBar extends CupertinoTabBar {
                 color: Colors.white,
                 child: Column(
                   children: [
-                    Container(
-                      height: 1,
-                      width: px(312),
-                      color: const Color(0xFFC4C6CB),
-                    ),
+                    // Container(
+                    //   height: 1,
+                    //   width: px(312),
+                    //   color: const Color(0xFFC4C6CB),
+                    // ),
                     const SizedBox(height: 13),
                     SizedBox(
                       width: px(287),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:sfss/pages/home/screens/community/user_post_card.dart';
 import 'package:sfss/widgets/adaptive_columns.dart';
 import 'package:sfss/widgets/adaptive_list_views.dart';
@@ -87,8 +88,64 @@ class _ScreenCommunityState extends State<ScreenCommunity> with TickerProviderSt
             ),
             child: Column(
               children: [
+                SizedBox(height: pxh(14, extraWScale: 0.3, maxScale: 1.2)),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    SizedBox(width: px(28, maxScale: 1)),
+                    Container(
+                      width: px(280),
+                      height: px(25),
+                      decoration: BoxDecoration(
+                        color: const Color(0xFFF4F1F1),
+                        borderRadius: BorderRadius.circular(px(12.5)),
+                      ),
+                      child: Align(
+                        alignment: Alignment(-1, 0),
+                        child: Row(
+                          children: [
+                            SizedBox(width: px(10, maxScale: 1.5),),
+                            SizedBox(
+                              height: px(16, maxScale: 1.5),
+                              width: px(16, maxScale: 1.5),
+                              child: SvgPicture.asset(
+                                'assets/images/search_icon.svg',
+                                color: const Color(0xFF8F9BAF),
+                              )
+                            ),
+                            SizedBox(width: px(5, maxScale: 1.5),),
+                            Expanded(
+                              child: CupertinoTextField(
+                                placeholderStyle: TextStyle(
+                                  color: const Color(0xFF8F9BAF),
+                                  fontFamily: SfssStyle.mainFont,
+                                  fontSize: px(12, maxScale: 1.5),
+                                ),
+                                style: TextStyle(
+                                  color: const Color(0xFF4A5568),
+                                  fontFamily: SfssStyle.mainFont,
+                                  fontSize: px(12, maxScale: 1.5),
+                                ),
+                                placeholder: '搜索一下',
+                                padding: EdgeInsets.zero,
+                                decoration: BoxDecoration(
+                                  color: Colors.transparent,
+                                ),
+                              ),
+                            ),
+                            SizedBox(width: px(8, maxScale: 1.5),)
+                          ],
+                        ),
+                      ),
+                    ),
+                    SizedBox(width: px(14, maxScale: 1)),
+                    Image.asset("assets/images/Ellipse 2.png", width: px(35, maxScale: 1), height: px(35, maxScale:1),),
+                    SizedBox(width: px(28, maxScale: 1)),
+
+                  ],
+                ),
                 SizedBox(
-                  height: pxh(50,maxScale: 1),
+                  height: pxh(40,maxScale: 1),
                   width: double.infinity,
                   child: Align(
                     alignment: Alignment.bottomCenter,
@@ -98,7 +155,7 @@ class _ScreenCommunityState extends State<ScreenCommunity> with TickerProviderSt
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          SizedBox(width: px(23, maxScale: 1),),
+                          // SizedBox(width: px(8, maxScale: 1),),
                           // Column(
                           //   children: [
                           //     SizedBox(height: 9,),
@@ -148,25 +205,25 @@ class _ScreenCommunityState extends State<ScreenCommunity> with TickerProviderSt
                           fontSize: px(15, maxScale:1),
                           color: indexSelected==3?SfssStyle.mainRed:SfssStyle.mainGrey
                           ),
-                          SizedBox(width: px(8),),
-                          Image.asset("assets/images/Ellipse 2.png", width: px(35, maxScale: 1), height: px(35, maxScale:1),),
+                          // SizedBox(width: px(8),),
                           
                         ],
                       ),
                     ),
                   ),
                 ),
-                Center(
-                  child: Padding(
-                    padding: EdgeInsets.only(right: px(34)),
-                    child: Container(
-                      height: 0.9,
-                      width: px(247),
-                      color: const Color(0xFFC4C6CB),
-                    ),
-                  ),
-                ),
-                SizedBox(height: pxh(15, extraWScale: 0.3, maxScale: 1.2)),
+                // Center(
+                //   child: Padding(
+                //     padding: EdgeInsets.only(right: px(34)),
+                //     child: Container(
+                //       height: 0.9,
+                //       width: px(247),
+                //       color: const Color(0xFFC4C6CB),
+                //     ),
+                //   ),
+                // ),
+                SizedBox(height: pxh(4, extraWScale: 0.3, maxScale: 1.2)),
+                
                 Expanded(
                 child: Align(
                   alignment: Alignment.topCenter,
