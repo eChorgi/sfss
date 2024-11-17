@@ -4,6 +4,7 @@ import 'package:extra_hittest_area/extra_hittest_area.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:sfss/data/device_data.dart';
 import 'package:sfss/data/sfss_data.dart';
 import 'package:sfss/enums/solar_term_enums.dart';
 import 'package:sfss/pages/page_home/screens/screen_solar_term/widgets/badge_display.dart';
@@ -15,6 +16,7 @@ import 'package:sfss/widgets/adaptive_list_views.dart';
 import 'package:sfss/widgets/sfss_widget.dart';
 import 'package:sfss/widgets/solar_term_badge.dart';
 import 'package:sfss/widgets/top_toggle.dart';
+import 'package:vibration/vibration.dart';
 
 class ScreenSolarTerm extends StatefulWidget {
   const ScreenSolarTerm({ Key? key }) : super(key: key);
@@ -29,6 +31,7 @@ class _ScreenSolarTermState extends State<ScreenSolarTerm> with TickerProviderSt
   bool isShowAll = true;
   List<bool> isCardShown = [];
   int cnt = 0;
+  List<bool> vibrationFlag = List.generate(24, (_)=>true);
   List<int> sumOfData = [];
   List<bool> selectSolorTerms = List.generate(24, (index) => false);
   late AnimationController loadAnimController;
@@ -47,7 +50,7 @@ class _ScreenSolarTermState extends State<ScreenSolarTerm> with TickerProviderSt
     for (int i = 1; i <= 24; i ++) {
       sumOfData.add(sumOfData[i-1]+SfssData.testData[i-1].length);
     }
-    isCardShown = List.generate(sumOfData[24], (index) => false);
+    isCardShown = List.generate(sumOfData[24], (index) => true);
     super.initState();
     loadAnimController = AnimationController(
       duration: const Duration(milliseconds: 3000),
@@ -82,6 +85,17 @@ class _ScreenSolarTermState extends State<ScreenSolarTerm> with TickerProviderSt
 
       if (begin < 0.0) begin = 0.0;
       if (end > 1) end = 1.0;
+      loadAnimController.addListener(() {
+      if (loadAnimController.value > end && vibrationFlag[i]) {
+          if(DeviceData.hasVibrator && DeviceData.hasAmplitudeControl){
+            Vibration.vibrate(
+              pattern: [20, 0],
+              intensities: [64, 0],
+            );
+          }
+          vibrationFlag[i] = false;
+        }
+      });
       slideOffsets.add(f(begin, end));
     }
     slideOpacities = [];
@@ -136,6 +150,7 @@ class _ScreenSolarTermState extends State<ScreenSolarTerm> with TickerProviderSt
     
   }
   Widget slideAnimater({required int index, required Widget child}) {
+    
     return Transform.scale(
       scale: slideScales[index].value,
       child: Opacity(
@@ -269,7 +284,6 @@ class _ScreenSolarTermState extends State<ScreenSolarTerm> with TickerProviderSt
                                                           StatefulBuilder(
                                                             builder: (context, setStateChild)=>GestureDetector(
                                                               onTap: (){
-                                                                print(i+j*4);
                                                                 setState(() {
                                                                   setStateChild(() {
                                                                     selectSolorTerms[i+j*4] = !selectSolorTerms[i+j*4];

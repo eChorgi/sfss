@@ -4,6 +4,8 @@ export '../__old/register/pageRegister.dart';
 export '../__old/pagePome.dart';
 export '../__old/detail/pageDetail.dart';
 
+import 'package:sfss/pages/page_camera/page_camera.dart';
+import 'package:sfss/pages/page_record_detail/page_record_detail.dart';
 import 'package:sfss/pages/page_record_edit/page_record_edit.dart';
 
 import '../__old/login/pageLogin.dart';
@@ -16,7 +18,7 @@ import 'package:flutter/material.dart';
 
 Map<String, Widget Function(BuildContext)> appRoutes = {
   '/':(context) {
-    return const PageWelcomeLogin();
+    return PageWelcomeLogin();
   },
   '/login': (context) {
     return const PageLogin();
@@ -29,5 +31,8 @@ Map<String, Widget Function(BuildContext)> appRoutes = {
   },
   '/recordEdit': (context) {
     return const PageRecordEdit();
+  },
+  '/recordDetail': (context) {
+    return const PageRecordDetail();
   },
 };

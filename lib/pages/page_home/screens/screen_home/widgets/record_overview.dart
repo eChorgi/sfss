@@ -37,6 +37,7 @@ class _RecordOverviewState extends State<RecordOverview> {
           ),
           child: Column(
             children: [
+              SizedBox(height: px(10),),
               SizedBox(
                 height: px(22),
                 child: Row(

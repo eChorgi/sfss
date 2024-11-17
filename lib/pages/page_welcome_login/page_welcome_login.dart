@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:math';
 import 'dart:ui';
 
@@ -6,12 +7,19 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:lottie/lottie.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:sfss/config/server_config.dart';
+import 'package:sfss/data/device_data.dart';
+import 'package:sfss/data/user_data.dart';
 import 'package:sfss/enums/solar_term_enums.dart';
 import 'package:sfss/pages/page_home/page_home.dart';
 import 'package:sfss/plugins/adapter.dart';
 import 'package:sfss/styles/sfss_style.dart';
 import 'package:sfss/widgets/no_animation_page_roughter.dart';
 import 'package:sfss/widgets/sfss_widget.dart';
+import 'package:toastification/toastification.dart';
+import 'package:vibration/vibration.dart';
+import 'package:http/http.dart' as http;
 
 class PageWelcomeLogin extends StatefulWidget {
   const PageWelcomeLogin({super.key});
@@ -37,8 +45,6 @@ class _PageWelcomeLoginState extends State<PageWelcomeLogin> with TickerProvider
   late Animation<double> loadingLeaveScale;
 
 
-
-  
   @override
   void initState() {
     super.initState();
@@ -186,7 +192,14 @@ class _PageWelcomeLoginState extends State<PageWelcomeLogin> with TickerProvider
             text: "微信登录",
             fontSize: pxfit(20, maxScale: 1.5, hscale: 2),
             onPressed: (){
+              if(animController1.value == 0 && DeviceData.hasVibrator && DeviceData.hasAmplitudeControl){
+                Vibration.vibrate(
+                  pattern: [20, 0],
+                  intensities: [60, 0],
+                );
+              }
               animController1.forward();
+
             // Navigator.pushNamed(context, '/login');
           }),
         ),
@@ -201,10 +214,17 @@ class _PageWelcomeLoginState extends State<PageWelcomeLogin> with TickerProvider
           width: px(114, maxScale: 1.5),
           height: px(19, maxScale: 1.5),
           child: SfssWidget.button(
+            
             color: Colors.transparent,
             text: "手机号注册 / 登录",
             fontSize: pxfit(14, maxScale: 1.5, hscale: 2),
             onPressed: (){
+              if(animController1.value == 0 && DeviceData.hasVibrator && DeviceData.hasAmplitudeControl){
+                Vibration.vibrate(
+                  pattern: [20, 0],
+                  intensities: [60, 0],
+                );
+              }
             // Navigator.pushNamed(context, '/login');
             animController1.forward();
           }),
@@ -286,7 +306,7 @@ class _PageWelcomeLoginState extends State<PageWelcomeLogin> with TickerProvider
               height: pxh(625),
               decoration: const BoxDecoration(
                 color: Colors.white,  
-                borderRadius: BorderRadius.only(
+                borderRadius: BorderRadius.only( 
                   topLeft: Radius.circular(22),
                   topRight: Radius.circular(22),
                 ),
@@ -449,18 +469,81 @@ class _PageWelcomeLoginState extends State<PageWelcomeLogin> with TickerProvider
                             text: '登录',
                             fontSize: pxfit(15),
                             borderRadius: BorderRadius.circular(pxh(10)),
-                            onPressed: (){
+                            onPressed: ()async{
+                              //收起键盘
                               animController2.forward();
-                              Future.delayed(Duration(milliseconds: 3500), () async {
-                                await animController3.animateTo(0.5);
-                                if (mounted) {
-                                  Navigator.of(context).push(NoAnimationPageRoute(builder: (context) => PageHome()));
-                                  // Navigator.pushReplacementNamed(context, '/home');
+                              FocusScope.of(context).requestFocus(FocusNode());
+
+                              final url = Uri.parse(ServerConfig.url + '/api/user/login');
+                              try{
+                                final response = await http.post(url, body: json.encode({'uid': '1', 'password': '123456'}), headers: {'Content-Type': 'application/json'},);
+                                if(response.statusCode == 200){
+                                  UserData.token = jsonDecode(response.body)['data']['token'];
+                                  print(UserData.token);
+                                  toastification.showCustom(
+                                    alignment: Alignment.topCenter,
+                                    context: context, 
+                                    autoCloseDuration: const Duration(seconds: 3),
+                                    animationBuilder: (context, animation, alignment, child) {
+                                      return ScaleTransition(
+                                          scale: CurvedAnimation(
+                                          parent: animation,
+                                          curve: Curves.easeOutBack,
+                                        ),
+                                        child: child,
+                                      );
+                                    },
+                                    builder: (context, holder) => Center(
+                                      child: Container(
+                                        padding: EdgeInsets.only(top: px(13, maxScale: 1), bottom: px(12, maxScale: 1), left: px(80, maxScale: 1), right: px(80, maxScale: 1)),
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(px(20, maxScale: 1)),
+                                          color: Colors.white,
+                                          boxShadow: [
+                                            BoxShadow(
+                                              color: Colors.black.withOpacity(0.2),
+                                              blurRadius: 10,
+                                              offset: const Offset(0, 5),
+                                            ),
+                                          ],
+                                        ),
+                                        child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.center,
+                                          children: [
+                                            SfssWidget.text(
+                                              '登录成功', 
+                                              fontSize: px(14, maxScale: 1),
+                                              color: SfssStyle.mainGrey,
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    )
+                                  );
+                                  Future.delayed(Duration(milliseconds: 500), () async {
+                                    await animController3.animateTo(0.5);
+                                    if (mounted) {
+                                      Navigator.of(context).push(NoAnimationPageRoute(builder: (context) => PageHome()));
+                                      // Navigator.pushReplacementNamed(context, '/home');
+                                    }
+                                    Future.delayed(Duration(seconds: 2),(){
+                                      animController2.reset();
+                                    });
+                                  });
                                 }
-                                Future.delayed(Duration(seconds: 2),(){
-                                  animController2.reset();
-                                });
-                              });
+                                // print(response.body);
+                                // print(jsonDecode(response.body));
+                                // var url = Uri.http('server.echorgi.site:8080', 'api/user/login');
+                                // //验证网络权限
+                                // // if(await Permission.networkStatus)
+                                // var response = await http.post(url, body: {'uid': '1', 'password': '123456'});
+                                if(animController2.value == 0 && DeviceData.hasVibrator && DeviceData.hasAmplitudeControl){
+                                  Vibration.vibrate(
+                                    pattern: [20, 0],
+                                    intensities: [60, 0],
+                                  );
+                                }
+                              }catch(e){}
                               // Navigator.pushNamed(context, '/home');
                             },
                           ),

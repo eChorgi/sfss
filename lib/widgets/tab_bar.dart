@@ -80,7 +80,7 @@ class SfssTabBar extends CupertinoTabBar {
                             onTap: () {
                               if (onTap != null) {
                                 // onTap!(items.length-1);
-                                onTapRecord!(currentIndex);
+                                onTapRecord(currentIndex);
                               }
                             },
                             child: Transform(

@@ -3,6 +3,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:sfss/data/device_data.dart';
 import 'package:sfss/enums/solar_term_enums.dart';
 import 'package:sfss/pages/page_home/screens/screen_community/widgets/user_post_card.dart';
 import 'package:sfss/pages/page_home/screens/screen_home/widgets/popular_topics.dart';
@@ -11,9 +12,11 @@ import 'package:sfss/pages/page_home/screens/screen_home/widgets/diet_progress.d
 import 'package:sfss/pages/page_home/screens/screen_home/widgets/today_food_info.dart';
 import 'package:sfss/plugins/adapter.dart';
 import 'package:sfss/styles/sfss_style.dart';
+import 'package:sfss/utils/animation_helper.dart';
 import 'package:sfss/widgets/adaptive_list_views.dart';
 import 'package:sfss/widgets/heatmap_calendar.dart';
 import 'package:sfss/widgets/sfss_widget.dart';
+import 'package:vibration/vibration.dart';
 
 class ScreenHome extends StatefulWidget {
   const ScreenHome({ Key? key }) : super(key: key);
@@ -24,11 +27,22 @@ class ScreenHome extends StatefulWidget {
 
 class _ScreenHomeState extends State<ScreenHome> with TickerProviderStateMixin {
   late AnimationController animController;
+  late AnimationController animController1;
   late Animation<double> Function(double, double) f;
   late List<Animation<double>> slideOffsets;
   late Animation<double> bgOpacity;
   late List<Animation<double>> slideOpacities;
-  int index = 0;
+
+  late Animation<double> cardOffsetX;
+  late Animation<double> cardOffsetY;
+  late Animation<double> cardClickScale1;
+  late Animation<double> cardClickScale2;
+  late Animation<double> cardOutOpacity;
+  late Animation<double> cardInOpacity;
+  late Animation<double> cardOutScale;
+  late Animation<double> cardRotate;
+  late Animation<double> cardInScale;
+  int index = SolarTerm.lidong.index;
   @override
   void initState() {
     
@@ -37,6 +51,10 @@ class _ScreenHomeState extends State<ScreenHome> with TickerProviderStateMixin {
       duration: const Duration(milliseconds: 2400),
       vsync: this,
     )..forward();
+    animController1 = AnimationController(
+      duration: const Duration(milliseconds: 3600),
+      vsync: this,
+    );
     // Future.delayed(Duration(seconds: 1), (){
     //   animController.forward();
     // });
@@ -76,9 +94,18 @@ class _ScreenHomeState extends State<ScreenHome> with TickerProviderStateMixin {
     }
     Timer.periodic(Duration(seconds: 5), (timer) {
       setState(() {
-        index = (index+1)%24;
+        // index = (index+1)%24;
       });
     });
+    var ff = 0.5;
+    cardOffsetX = getAnimationGenerator(animController1, beginVal: 0, endVal: 0, curve: Curves.ease)(0, 1);
+    cardOffsetY = getAnimationGenerator(animController1, curve: Curves.easeOutCubic, beginVal: 0, endVal: px(80))(ff*0.08, ff*0.4);
+    cardClickScale1 = getAnimationGenerator(animController1, beginVal: 1, endVal: 1.1)(0, ff*0.03);
+    cardClickScale2 = getAnimationGenerator(animController1, beginVal: 1, endVal: 1.0/1.1)(ff*0.03, ff*0.06);
+    cardOutScale = getAnimationGenerator(animController1, beginVal: 1, endVal: 0, curve: Curves.easeInOutCubic)(ff*0.15, ff*0.45);
+    cardOutOpacity = getAnimationGenerator(animController1, beginVal: 1, endVal: 0.6, curve: Curves.ease)(ff*0.15, ff*0.4);
+    cardRotate = getAnimationGenerator(animController1, beginVal: 0, endVal: Random().nextDouble()*0.1-0.05, curve: Curves.easeOutBack)(0.0, ff*0.3);
+    cardInScale = getAnimationGenerator(animController1, beginVal: 0, endVal: 1, curve: Curves.elasticOut)(0.5, 1);
   }
   @override
   void dispose() {
@@ -96,7 +123,6 @@ class _ScreenHomeState extends State<ScreenHome> with TickerProviderStateMixin {
   }
 
   Widget layerSheet() {
-    print(1-slideOpacities[0].value);
     return Align(
       alignment: Alignment.topCenter,
       child: Padding(
@@ -131,26 +157,75 @@ class _ScreenHomeState extends State<ScreenHome> with TickerProviderStateMixin {
                       ),
                       SizedBox(height: pxh(15, extraWScale: 0.3, maxScale: 1.2)),
                       
-                      slideAnimater(
-                        index: 1,
-                        child: SizedBox(
-                          width: px(309),
-                          height: px(84),
-                          child: TodayFoodInfo(solarTermIndex: index,)
-                        ),
+                      Stack(
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.only(top: pxh(104)),
+                            child: slideAnimater(
+                              index: 2,
+                              child: Center(
+                                child: SizedBox(
+                                  width: px(305),
+                                  height: px(216),
+                                  child: const RecordOverview()
+                                ),
+                              ),
+                            ),
+                          ),
+                          Center(
+                            child: slideAnimater(
+                              index: 1,
+                              child: GestureDetector(
+                                onTap: (){
+                                  animController1.forward().then((value) {
+                                    // animController1.reverse();
+                                  });
+                                  if(animController1.value == 0 && DeviceData.hasVibrator && DeviceData.hasAmplitudeControl){
+                                    Vibration.vibrate(
+                                      pattern: [20, 0],
+                                      intensities: [80, 0],
+                                    );
+                                  }
+                                },
+                                child: SizedBox(
+                                  width: px(309),
+                                  height: px(84),
+                                  child: AnimatedBuilder(
+                                    animation: animController1,
+                                    builder: (context, child) {
+                                      return Stack(
+                                        children: [
+                                          Opacity(
+                                            opacity: 1,
+                                            child: Transform.scale(
+                                              scale: cardInScale.value,
+                                              child: TodayFoodInfo(solarTermIndex: index, checked: true,)
+                                            ),
+                                          ),
+                                          Opacity(
+                                            opacity: cardOutOpacity.value,
+                                            child: Transform.translate(
+                                              offset: Offset(cardOffsetX.value, cardOffsetY.value),
+                                              child: Transform.rotate(
+                                                angle: cardRotate.value,
+                                                child: Transform.scale(
+                                                  scale: cardClickScale1.value*cardClickScale2.value*cardOutScale.value,
+                                                  child: TodayFoodInfo(solarTermIndex: index,)
+                                                ),
+                                              ),
+                                            ),
+                                          )
+                                        ]
+                                      );
+                                    }
+                                  ),
+                                )
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                       // SizedBox(height: pxh(26)),
-                      SizedBox(height: pxh(20)),
-                      slideAnimater(
-                        index: 2,
-                        child: Center(
-                          child: SizedBox(
-                            width: px(305),
-                            height: px(216),
-                            child: const RecordOverview()
-                          ),
-                        ),
-                      ),
                       SizedBox(height: pxh(20)),
                       
                       slideAnimater(

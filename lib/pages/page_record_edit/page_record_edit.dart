@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:math';
 import 'dart:ui';
 
@@ -7,8 +8,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:lottie/lottie.dart';
 import 'package:sfss/enums/solar_term_enums.dart';
+import 'package:sfss/pages/page_camera/page_camera.dart';
 import 'package:sfss/pages/page_home/page_home.dart';
 import 'package:sfss/plugins/adapter.dart';
 import 'package:sfss/styles/sfss_style.dart';
@@ -33,10 +36,19 @@ class _PageRecordEditState extends State<PageRecordEdit> with TickerProviderStat
 
   late TextEditingController controller = TextEditingController();
 
+  List<Image> images = [];
+
 
   
   @override
   void initState() {
+    // images.add(Image.asset('assets/images/foods/0.jpg'));
+    // images.add(Image.asset('assets/images/foods/1.jpg'));
+    // images.add(Image.asset('assets/images/foods/2.jpg'));
+    // images.add(Image.asset('assets/images/foods/2.jpg'));
+    // images.add(Image.asset('assets/images/foods/2.jpg'));
+    // images.add(Image.asset('assets/images/foods/2.jpg'));
+    // images.add(Image.asset('assets/images/foods/2.jpg'));
     super.initState();
     animController1 = AnimationController(
       duration: const Duration(milliseconds: 450),
@@ -161,31 +173,58 @@ class _PageRecordEditState extends State<PageRecordEdit> with TickerProviderStat
                 SizedBox(
                   width: double.infinity,
                   height: 55,
-                  child: Row(
+                  child: ListView(
+                    scrollDirection: Axis.horizontal,
                     children: [
                       SizedBox(
                         width: px(32),
                       ),
-                      Container(
-                        width: 43,
-                        height: 43,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(10),
-                          boxShadow: [BoxShadow(
-                            color: Colors.black.withOpacity(0.15),
-                            blurRadius: 15,
-                            spreadRadius: -4
-                          )]
-                        ),
-                        child: Center(
-                          child: SizedBox(
-                            height: 18,
-                            width: 18,
-                            child: SvgPicture.asset('assets/images/add_icon.svg')
+                      Center(
+                        child: Container(
+                          width: 43,
+                          height: 43,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(10),
+                            boxShadow: [BoxShadow(
+                              color: Colors.black.withOpacity(0.15),
+                              blurRadius: 15,
+                              spreadRadius: -4
+                            )]
+                          ),
+                          child: Center(
+                            child: SizedBox(
+                              height: 18,
+                              width: 18,
+                              child: SvgPicture.asset('assets/images/add_icon.svg')
+                            ),
                           ),
                         ),
-                      )
+                      ),
+                      for(int i = 0; i < images.length; i++)
+                        Padding(
+                          padding: EdgeInsets.only(left: 10),
+                          child: Center(
+                            child: Container(
+                              width: 43,
+                              height: 43,
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(10),
+                                image: DecorationImage(
+                                  image: images[i].image,
+                                  fit: BoxFit.cover
+                                ),
+                                // boxShadow: [BoxShadow(
+                                //   color: Colors.black.withOpacity(0.15),
+                                //   blurRadius: 15,
+                                //   spreadRadius: -4
+                                // )]
+                              ),
+                            ),
+                          ),
+                        ),
+                        SizedBox(width: 43,)
                     ],
                   ),
                 ),
@@ -214,38 +253,64 @@ class _PageRecordEditState extends State<PageRecordEdit> with TickerProviderStat
                         width: 0.5,
                         color: const Color(0xFFA4AAB3),
                       ),
-                      Row(
-                        children: [
-                          SizedBox(
-                            width: 16,
-                            height: 14,
-                            child: SvgPicture.asset('assets/images/camera_icon.svg')
-                          ),
-                          SizedBox(width: 10,),
-                          SfssWidget.text(
-                            '拍摄',
-                            fontSize: 14
-                          )
-                        ],
+                      GestureDetectorHitTestWithoutSizeLimit(
+                        extraHitTestArea: EdgeInsets.all(10),
+                        onTap: ()async{
+                          var res = await Navigator.of(context).push(
+                          //进入拍照页面PageCamera
+                            NoAnimationPageRoute(
+                            builder: (context) => PageCamera(),
+                            ),
+                          );
+                          if(res != null)
+                            images.add(res);
+                        },
+                        child: Row(
+                          children: [
+                            SizedBox(
+                              width: 16,
+                              height: 14,
+                              child: SvgPicture.asset('assets/images/camera_icon.svg')
+                            ),
+                            SizedBox(width: 10,),
+                            SfssWidget.text(
+                              '拍摄',
+                              fontSize: 14
+                            )
+                          ],
+                        ),
                       ),
                       Container(
                         height: 15,
                         width: 0.5,
                         color: const Color(0xFFA4AAB3),
                       ),
-                      Row(
-                        children: [
-                          SizedBox(
-                            width: 16,
-                            height: 14,
-                            child: SvgPicture.asset('assets/images/album_icon.svg')
-                          ),
-                          SizedBox(width: 10,),
-                          SfssWidget.text(
-                            '相册',
-                            fontSize: 14
-                          )
-                        ],
+                      GestureDetectorHitTestWithoutSizeLimit(
+                        extraHitTestArea: EdgeInsets.all(10),
+                        onTap: ()async{
+                          final ImagePicker picker = ImagePicker();
+                          final List<XFile>? files = await picker.pickMultiImage(
+                            
+                          );
+                          images.addAll(files!.map((e) => Image.file(File(e.path))));
+                          setState(() {
+                            
+                          });
+                        },
+                        child: Row(
+                          children: [
+                            SizedBox(
+                              width: 16,
+                              height: 14,
+                              child: SvgPicture.asset('assets/images/album_icon.svg')
+                            ),
+                            SizedBox(width: 10,),
+                            SfssWidget.text(
+                              '相册',
+                              fontSize: 14
+                            )
+                          ],
+                        ),
                       )
                     ],
                   ),
@@ -321,18 +386,24 @@ class _PageRecordEditState extends State<PageRecordEdit> with TickerProviderStat
                         ),
                         Padding(
                           padding: EdgeInsets.only(left: px(80)),
-                          child: Container(
-                            width: px(56, maxScale: 1.5),
-                            height: px(29, maxScale: 1.5),
-                            decoration: BoxDecoration(
-                              color: SfssStyle.mainRed,
-                              borderRadius: BorderRadius.circular(px(7, maxScale: 1.5))
-                            ),
-                            child: Center(
-                              child: SfssWidget.text(
-                                '保存',
-                                color: Colors.white,
-                                fontSize: px(14)
+                          child: GestureDetectorHitTestWithoutSizeLimit(
+                            extraHitTestArea: EdgeInsets.all(px(20)),
+                            onTap: () {
+                              Navigator.of(context).pop('saved');
+                            },
+                            child: Container(
+                              width: px(56, maxScale: 1.5),
+                              height: px(29, maxScale: 1.5),
+                              decoration: BoxDecoration(
+                                color: SfssStyle.mainRed,
+                                borderRadius: BorderRadius.circular(px(7, maxScale: 1.5))
+                              ),
+                              child: Center(
+                                child: SfssWidget.text(
+                                  '保存',
+                                  color: Colors.white,
+                                  fontSize: px(14)
+                                ),
                               ),
                             ),
                           ),

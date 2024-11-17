@@ -8,17 +8,20 @@ import 'package:sfss/styles/sfss_style.dart';
 class SfssWidget{
 
   static Widget text(String content, {StrutStyle ?strutStyle,Color ?color, double ?fontSize, String? fontFamily, TextAlign ?textAlign, TextOverflow ?overflow, int ?maxLines, TextDecoration ?decoration}) {
+    var _fontSize = fontSize??pxh(20);
     return Text(
       content,
       style: TextStyle(
         color: color ?? SfssStyle.mainGrey,
-        fontSize: fontSize ?? pxh(20),
+        fontSize: _fontSize,
         fontFamily: fontFamily ?? SfssStyle.mainFont,
+        letterSpacing: _fontSize*-0.01
       ),
       maxLines: maxLines,
       overflow: overflow,
       strutStyle: strutStyle,
       textAlign: textAlign,
+      
     );
   }
   static Widget button({ required String text, Decoration ?decoration, double ?fontSize, TextStyle ? textStyle, EdgeInsetsGeometry ?padding, Color ?color, Color ?borderColor, double ? borderWidth, CupertinoDynamicColor ?disabledColor, double ?minSize, double ?pressedOpacity, BorderRadius ?borderRadius, Alignment ?alignment, Color ?focusColor, FocusNode ?focusNode, void Function(bool) ?onFocusChange, bool ?autofocus,  required void Function()? onPressed}) {

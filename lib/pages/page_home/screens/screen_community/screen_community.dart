@@ -1,13 +1,19 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:sfss/config/server_config.dart';
+import 'package:sfss/data/user_data.dart';
 import 'package:sfss/pages/page_home/screens/screen_community/widgets/user_post_card.dart';
+import 'package:sfss/utils/server_api.dart';
 import 'package:sfss/widgets/adaptive_columns.dart';
 import 'package:sfss/widgets/adaptive_list_views.dart';
 import 'package:sfss/pages/page_home/screens/screen_home/widgets/diet_progress.dart';
 import 'package:sfss/plugins/adapter.dart';
 import 'package:sfss/styles/sfss_style.dart';
 import 'package:sfss/widgets/sfss_widget.dart';
+import 'package:http/http.dart' as http;
 
 
 class ScreenCommunity extends StatefulWidget {
@@ -22,6 +28,7 @@ class _ScreenCommunityState extends State<ScreenCommunity> with TickerProviderSt
   late Animation<double> Function(double, double) f;
   late List<Animation<double>> slideOffsets;
   late List<Animation<double>> slideOpacities;
+  List<Widget> items = [];
   @override
   void initState() {
     super.initState();
@@ -62,6 +69,37 @@ class _ScreenCommunityState extends State<ScreenCommunity> with TickerProviderSt
       if (begin < 0.0) begin = 0.0;
       if (end > 0.25) end = 0.25;
       slideOpacities.add(f(begin, end));
+    }
+
+    _loadData();
+  }
+
+
+
+  final url = Uri.parse(ServerConfig.url + '/api/diary/');
+  void _loadData() async {
+    final response = await http.get(url, headers: {'token': UserData.token});
+    if (response.statusCode == 200) {
+      final res = jsonDecode(utf8.decode(response.bodyBytes));
+      print(res);
+      for (var item in res['data']) {
+        var profile = await ServerApi.getProfile(item['uid']);
+        if(profile == {}) {
+          continue;
+        }
+        // items.add(await UserPostCard.network(
+        //   imagePath: item['imageUrls'][0],
+        //   avatarUrl: profile['avatarUrl']??'https://kkimgs.yisou.com/ims?kt=url&at=ori&key=aHR0cHM6Ly9zbnMtaW1nLXFjLnhoc2Nkbi5jb20vMTAwMGcwMDgxdGhkODQwOGY0MDYwNW9jcG1kZmsxYWhtcTI4YnRvMA==&sign=yx:5adYljt0MbepbMi6YyTosttIP-s=&tv=0_0',
+        //   title: item['foodName'],
+        //   likeCount: item['likeCount'],
+        //   userName: profile['nickname']??'momo',
+        // ));
+        setState(() {
+          
+        });
+      }
+    } else {
+      throw Exception('Failed to load data');
     }
   }
   @override
@@ -377,6 +415,7 @@ class _ScreenCommunityState extends State<ScreenCommunity> with TickerProviderSt
                           UserPostCard(imageUrl: 'assets/images/foods/14.jpg', avatarUrl: 'assets/images/foods/14.jpg', title: '鸡蛋炒面', likeCount: 12, userName: '炒面高手',),
                           UserPostCard(imageUrl: 'assets/images/foods/15.jpg', avatarUrl: 'assets/images/foods/15.jpg', title: '芋圆西米露，香甜顺滑', likeCount: 12, userName: '甜品探索者',),
                         ],
+                      
                       ),
                     )
                   ),

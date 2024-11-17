@@ -126,7 +126,6 @@ class _ScreenHistoryState extends State<ScreenHistory> with TickerProviderStateM
   }
 
   Widget layerSheet() {
-    print(1-slideOpacities[0].value);
     return Align(
       alignment: Alignment.topCenter,
       child: Hero(

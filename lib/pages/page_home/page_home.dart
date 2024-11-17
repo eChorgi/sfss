@@ -13,6 +13,7 @@ import 'package:sfss/plugins/adapter.dart';
 import 'package:sfss/styles/sfss_style.dart';
 import 'package:sfss/widgets/sfss_widget.dart';
 import 'package:sfss/widgets/tab_bar.dart';
+import 'package:toastification/toastification.dart';
 
 class PageHome extends StatefulWidget {
   const PageHome({ Key? key }) : super(key: key);
@@ -29,7 +30,8 @@ class _PageHomeState extends State<PageHome> with TickerProviderStateMixin {
   static BottomNavigationBarItem emptyTabBarItem() {
     return BottomNavigationBarItem(
       icon: SizedBox(),
-      activeIcon: SizedBox());
+      activeIcon: SizedBox()
+    );
   }
   @override
   Widget build(BuildContext context) {
@@ -37,7 +39,6 @@ class _PageHomeState extends State<PageHome> with TickerProviderStateMixin {
     return GestureDetector(
       behavior: HitTestBehavior.translucent,
       onVerticalDragUpdate: (details) {
-        print('object');
         if(details.delta.distance > 10) {
           SystemChannels.textInput.invokeMethod('TextInput.hide');
         }
@@ -57,9 +58,9 @@ class _PageHomeState extends State<PageHome> with TickerProviderStateMixin {
                 onTapRecord: (index){
                   lastSubPageIndex = index;
                   final subTitle = ['冬时韵悠长，烹茶品暗香。', '节气引食韵，五谷丰登香。', '秋风摇黄叶，炉火煮新茶。', '冬时韵悠长，烹茶品暗香。'];
-                  ['立冬', '时令', '坊间', '立冬'].asMap().forEach((i, e) {
+                  ['立冬', '时令', '坊间', '立冬'].asMap().forEach((i, e) async {
                     if (index == i) {
-                       Navigator.push(context, MaterialPageRoute(
+                        final result = await Navigator.push(context, MaterialPageRoute(
                         builder: (context) {
                           return const PageRecordEdit();
                         },
@@ -67,7 +68,57 @@ class _PageHomeState extends State<PageHome> with TickerProviderStateMixin {
                           arguments: {'title': e, 'subTitle': subTitle[i]}
                         )
                       ));
-                      // Navigator.pushNamed(context, '/recordEdit', arguments: {'title': e, 'subTitle': subTitle[i]});
+                      if(result == 'saved') {
+                        toastification.showCustom(
+                          alignment: Alignment.topCenter,
+                          context: context, 
+                          autoCloseDuration: const Duration(seconds: 3),
+                          animationBuilder: (context, animation, alignment, child) {
+                            return ScaleTransition(
+                                scale: CurvedAnimation(
+                                parent: animation,
+                                curve: Curves.easeOutBack,
+                              ),
+                              child: child,
+                            );
+                          },
+                          builder: (context, holder) => Center(
+                            child: Container(
+                              padding: EdgeInsets.only(top: px(13, maxScale: 1), bottom: px(12, maxScale: 1), left: px(80, maxScale: 1), right: px(80, maxScale: 1)),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(px(20, maxScale: 1)),
+                                color: Colors.white,
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.black.withOpacity(0.2),
+                                    blurRadius: 10,
+                                    offset: const Offset(0, 5),
+                                  ),
+                                ],
+                              ),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  SfssWidget.text(
+                                    '您的食记已发表成功', 
+                                    fontSize: px(16, maxScale: 1),
+                                    color: SfssStyle.mainRed,
+                                  ),
+                                  SfssWidget.text(
+                                    '相关记录已同步到往迹', 
+                                    fontSize: px(12, maxScale: 1),
+                                    color: SfssStyle.mainGrey,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          )
+                        );
+                        setState(() {
+                          controller.index = 3;
+                        });
+                      }
+                        // Navigator.pushNamed(context, '/recordEdit', arguments: {'title': e, 'subTitle': subTitle[i]});
                     }
                   });
                   // Navigator.pushNamed(context, '/recordEdit', arguments: {'title': 'value'});

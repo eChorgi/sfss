@@ -7,7 +7,8 @@ import 'package:sfss/widgets/sfss_widget.dart';
 
 class TodayFoodInfo extends StatefulWidget {
   final int solarTermIndex;
-  const TodayFoodInfo({super.key, this.solarTermIndex = 0});
+  final bool checked;
+  const TodayFoodInfo({super.key, this.solarTermIndex = 0, this.checked = false});
 
   @override
   State<TodayFoodInfo> createState() => _TodayFoodInfoState();
@@ -39,11 +40,21 @@ class _TodayFoodInfoState extends State<TodayFoodInfo> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Padding(
-                      padding: EdgeInsets.only(left: px(25.0)),
-                      child: SfssWidget.text(
-                        '羊肉',
-                        fontSize: px(30),
-                        color: Colors.white
+                      padding: EdgeInsets.only(left: px(25.0), right: px(35)),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          SfssWidget.text(
+                            '羊肉',
+                            fontSize: px(30),
+                            color: Colors.white
+                          ),
+                          if(widget.checked)Icon(
+                            Icons.check_box_rounded,
+                            color: Colors.white,
+                            size: px(22),
+                          )
+                        ],
                       ),
                     ),
                     SizedBox(height: px(10),),
